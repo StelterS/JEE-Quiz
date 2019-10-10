@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/WEB-INF/templates/main.xhtml">
+    <ui:define name="content">
+        <h:form>
+            <h:panelGrid columns="3">
+                <h:outputLabel value="Title:" for="title"/>
+                <h:inputText id="title" value="#{exerciseCreate.exercise.title}"/>
+                <h:message for="title"/>
+
+                <h:outputLabel value="Max points:" for="points"/>
+                <h:inputText id="points" value="#{exerciseCreate.exercise.maxPoints}"/>
+                <h:message for="points"/>
+
+                <h:outputLabel value="Difficulty:" for="difficulty"/>
+                <h:selectOneMenu id="difficulty" value="#{exerciseCreate.exercise.difficulty}">
+                    <f:selectItems value="#{exerciseCreate.availableDifficulties}" var="difficulty" itemValue="#{difficulty}" itemLabel="#{difficulty}"/>
+                </h:selectOneMenu>
+                <h:message for="difficulty"/>
+
+                <h:outputLabel value="Content:" for="content"/>
+                <h:inputText id="content" value="#{exerciseCreate.exercise.content}"/>
+                <h:message for="content"/>
+
+                <h:commandButton value="Save" action="#{exerciseCreate.saveExercise}"/>
+                <h:messages/>
+            </h:panelGrid>
+        </h:form>
+
+        <h:button value="Back" outcome="exercise_list.xhtml"/>
+    </ui:define>
+
+</ui:composition>

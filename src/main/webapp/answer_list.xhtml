@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/WEB-INF/templates/main.xhtml">
+
+    <ui:define name="content">
+        <h:dataTable value="#{answerList.answers}" var="answer"
+            rowClasses="table-row">
+            <h:column>
+                <f:facet name="header">ID</f:facet>
+                <h:outputText value="#{answer.id}"/>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Answer</f:facet>
+                <h:outputText value="#{answer.content}"/>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Submission Date</f:facet>
+                <h:outputText value="#{answer.submissionDate}"/>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Score [%]</f:facet>
+                <h:outputText value="#{answer.percent}"/>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Exercise Title</f:facet>
+                <h:outputText value="#{answer.exercise.title}"/>
+            </h:column>
+        </h:dataTable>
+        <h:button value="Create" outcome="answer_create_edit.xhtml"/>
+    </ui:define>
+
+</ui:composition>
