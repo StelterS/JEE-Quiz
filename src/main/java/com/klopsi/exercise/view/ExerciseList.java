@@ -25,4 +25,9 @@ public class ExerciseList {
 		}
 		return exercises;
 	}
+
+	public String removeExercise(Exercise exercise) {
+		service.removeExercise(exercise);
+		return "exercise_list?faces-redirect=true";
+	}
 }

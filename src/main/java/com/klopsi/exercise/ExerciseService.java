@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,6 +44,22 @@ public class ExerciseService {
 
 	public synchronized Exercise findExercise(int id) {
 		return exercises.stream().filter(exercise -> exercise.getId() == id).findFirst().map(Exercise::new).orElse(null);
+	}
+
+	public void removeAnswer(Answer answer) {
+		// remove from corresponding exercise
+		List<Answer> newAnswers = exercises.get(answer.getExercise().getId() - 1).getAnswers().stream().map(Answer::new).collect(Collectors.toList());
+		newAnswers.removeIf(a -> a.getId() == answer.getId());
+		exercises.get(answer.getExercise().getId() - 1).setAnswers(newAnswers);
+		// remove answer from service aka "database"
+		answers.removeIf(a -> a.equals(answer));
+	}
+
+	public void removeExercise(Exercise exercise) {
+		// remove all corresponding answers
+		answers.removeIf(answer -> exercise.getAnswers().stream().anyMatch(element -> element.getId() == answer.getId()));
+		// remove exercise itself
+		exercises.removeIf(e -> e.equals(exercise));
 	}
 
 	public synchronized void saveExercise(Exercise exercise){

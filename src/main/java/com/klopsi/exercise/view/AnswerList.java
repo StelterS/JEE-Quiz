@@ -25,4 +25,9 @@ public class AnswerList {
 		}
 		return answers;
 	}
+
+	public String removeAnswer(Answer answer) {
+		service.removeAnswer(answer);
+		return "answer_list?faces-redirect=true";
+	}
 }

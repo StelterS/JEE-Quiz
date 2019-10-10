@@ -32,6 +32,13 @@
                 <f:facet name="header">Exercise Title</f:facet>
                 <h:outputText value="#{answer.exercise.title}"/>
             </h:column>
+
+            <h:column>
+                <h:form>
+                    <h:commandButton value="Delete" action="#{answerList.removeAnswer(answer)}"/>
+                </h:form>
+            </h:column>
+
         </h:dataTable>
         <h:button value="Create" outcome="answer_create_edit.xhtml"/>
     </ui:define>
