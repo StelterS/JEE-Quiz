@@ -48,9 +48,7 @@ public class ExerciseService {
 
 	public void removeAnswer(Answer answer) {
 		// remove from corresponding exercise
-		List<Answer> newAnswers = exercises.get(answer.getExercise().getId() - 1).getAnswers().stream().map(Answer::new).collect(Collectors.toList());
-		newAnswers.removeIf(a -> a.getId() == answer.getId());
-		exercises.get(answer.getExercise().getId() - 1).setAnswers(newAnswers);
+		deleteAnsFromCorrespondingExercises(answer);
 		// remove answer from service aka "database"
 		answers.removeIf(a -> a.equals(answer));
 	}
@@ -69,8 +67,17 @@ public class ExerciseService {
 		}
 
 		if(exercise.getId() != 0) {
+			// copy answers on edit
+			//List<Answer> answers = exercises.get(exercise.getId() - 1).getAnswers().stream().map(Answer::new).collect(Collectors.toList());
+			//exercise.setAnswers(answers);
+			// update exercise
 			exercises.removeIf(e -> e.getId() == exercise.getId());
 			exercises.add(new Exercise(exercise));
+			for (Answer answer : answers) {
+				if (answer.getExercise().getId() == exercise.getId()) {
+					answer.setExercise(exercise);
+				}
+			}
 		}
 		else {
 			exercise.setId(exercises.stream().mapToInt(Exercise::getId).max().orElse(0) + 1);
@@ -80,6 +87,10 @@ public class ExerciseService {
 
 	public synchronized void saveAnswer(Answer answer){
 		if(answer.getId() != 0) {
+			// remove from corresponding exercise
+			System.out.println("Usuwanie");
+			deleteAnsFromCorrespondingExercises(answer);
+			// change element
 			answers.removeIf(a -> a.getId() == answer.getId());
 			answers.add(new Answer(answer));
 		}
@@ -88,9 +99,23 @@ public class ExerciseService {
 			answers.add(new Answer(answer));
 		}
 		// add answer to corresponding exercise
-		List<Answer> newAnswers = exercises.get(answer.getExercise().getId() - 1).getAnswers().stream().map(Answer::new).collect(Collectors.toList());
-		newAnswers.add(answer);
-		exercises.get(answer.getExercise().getId() - 1).setAnswers(newAnswers);
+		for(Exercise exercise : exercises) {
+			if (exercise.getId() == answer.getExercise().getId()) {
+				List<Answer> newAnswers = exercise.getAnswers().stream().map(Answer::new).collect(Collectors.toList());
+				newAnswers.add(answer);
+				exercise.setAnswers(newAnswers);
+			}
+		}
+	}
+
+	public void deleteAnsFromCorrespondingExercises(Answer answer) {
+		for (Exercise exercise : exercises) {
+			if (exercise.getId() == answer.getExercise().getId()) {
+				List<Answer> newAnswers = exercise.getAnswers().stream().map(Answer::new).collect(Collectors.toList());
+				newAnswers.removeIf(a -> a.getId() == answer.getId());
+				exercise.setAnswers(newAnswers);
+			}
+		}
 	}
 
 }

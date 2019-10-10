@@ -4,30 +4,35 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="/WEB-INF/templates/main.xhtml">
+    <f:metadata>
+        <f:viewParam name="answer" value="#{answerEdit.answer}" required="true"/>
+        <f:viewAction action="#{answerEdit.saveLastExercise}"/>
+    </f:metadata>
+
     <ui:define name="content">
         <h:form>
             <h:panelGrid columns="3">
                 <h:outputLabel value="Content:" for="content"/>
-                <h:inputText id="content" value="#{answerCreate.answer.content}"/>
+                <h:inputText id="content" value="#{answerEdit.answer.content}"/>
                 <h:message for="content"/>
 
                 <h:outputLabel value="Score [%]" for="percent"/>
-                <h:inputText id="percent" value="#{answerCreate.answer.percent}"/>
+                <h:inputText id="percent" value="#{answerEdit.answer.percent}"/>
                 <h:message for="percent"/>
 
                 <h:outputLabel value="Submission date:" for="date"/>
-                <h:inputText id="date" value="#{answerCreate.answer.submissionDate}">
+                <h:inputText id="date" value="#{answerEdit.answer.submissionDate}">
                     <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
                 </h:inputText>
                 <h:message for="date"/>
 
                 <h:outputLabel value="Exercise:" for="exercise"/>
-                <h:selectOneMenu id="exercise" collectionType="java.util.ArrayList" value="#{answerCreate.answer.exercise}">
-                    <f:selectItems value="#{answerCreate.availableExercises}" var="exercise" itemValue="#{exercise}" itemLabel="#{exercise.title}"/>
+                <h:selectOneMenu id="exercise" collectionType="java.util.ArrayList" value="#{answerEdit.answer.exercise}">
+                    <f:selectItems value="#{answerEdit.availableExercises}" var="exercise" itemValue="#{exercise}" itemLabel="#{exercise.title}"/>
                 </h:selectOneMenu>
                 <h:message for="exercise"/>
 
-                <h:commandButton value="Save" action="#{answerCreate.saveAnswer}"/>
+                <h:commandButton value="Save" action="#{answerEdit.saveAnswer}"/>
                 <h:messages/>
             </h:panelGrid>
         </h:form>

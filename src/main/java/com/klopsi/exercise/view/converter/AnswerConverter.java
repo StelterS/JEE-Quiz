@@ -25,6 +25,9 @@ public class AnswerConverter implements Converter<Answer> {
 		if (value == null || value.isEmpty()) {
 			return null;
 		}
+		if(Integer.parseInt(value) == 0) {
+			return new Answer();
+		}
 		return service.findAnswer(Integer.parseInt(value));
 	}
 

@@ -25,6 +25,9 @@ public class ExerciseConverter implements Converter<Exercise> {
 		if (value == null || value.isEmpty()) {
 			return null;
 		}
+		if(Integer.parseInt(value) == 0) {
+			return new Exercise();
+		}
 		return service.findExercise(Integer.parseInt(value));
 	}
 

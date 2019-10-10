@@ -39,8 +39,16 @@
                 </h:form>
             </h:column>
 
+            <h:column>
+                <h:button value="Edit" outcome="answer_create_edit.xhtml">
+                    <f:param name="answer" value="#{answer.id}"/>
+                </h:button>
+            </h:column>
+
         </h:dataTable>
-        <h:button value="Create" outcome="answer_create_edit.xhtml"/>
+        <h:button value="Create" outcome="answer_create_edit.xhtml">
+            <f:param name="answer" value="0"/>
+        </h:button>
     </ui:define>
 
 </ui:composition>

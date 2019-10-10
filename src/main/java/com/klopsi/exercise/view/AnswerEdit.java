@@ -6,6 +6,7 @@ import com.klopsi.exercise.model.Exercise;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,6 +24,10 @@ public class AnswerEdit implements Serializable {
 	@Setter
 	private Answer answer;
 
+	@Getter
+	@Setter
+	private Answer lastAnswer;
+
 	@Inject
 	public AnswerEdit(ExerciseService service){
 		this.service = service;
@@ -36,7 +41,19 @@ public class AnswerEdit implements Serializable {
 	}
 
 	public String saveAnswer() {
+		if (lastAnswer.getId() != 0){
+			service.deleteAnsFromCorrespondingExercises(lastAnswer);
+		}
 		service.saveAnswer(answer);
 		return "answer_list?faces-redirect=true";
+	}
+
+	public void saveLastExercise() {
+		setLastAnswer(new Answer(answer));
+	}
+
+	@PostConstruct
+	public void init() {
+		setAnswer(new Answer());
 	}
 }

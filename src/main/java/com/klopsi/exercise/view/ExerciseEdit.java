@@ -6,6 +6,7 @@ import com.klopsi.exercise.model.Exercise;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,6 +35,11 @@ public class ExerciseEdit implements Serializable {
 	public String saveExercise(){
 		service.saveExercise(exercise);
 		return "exercise_list?faces-redirect=true";
+	}
+
+	@PostConstruct
+	public void init(){
+		setExercise(new Exercise());
 	}
 
 }
