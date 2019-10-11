@@ -1,5 +1,6 @@
-package com.klopsi.exercise.model;
+package com.klopsi.answer.model;
 
+import com.klopsi.exercise.model.Exercise;
 import lombok.*;
 
 import javax.validation.constraints.Max;

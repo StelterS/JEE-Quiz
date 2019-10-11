@@ -1,7 +1,8 @@
-package com.klopsi.exercise.view;
+package com.klopsi.answer.view;
 
+import com.klopsi.answer.AnswerService;
+import com.klopsi.answer.model.Answer;
 import com.klopsi.exercise.ExerciseService;
-import com.klopsi.exercise.model.Answer;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -11,11 +12,11 @@ import java.util.List;
 @Named
 @RequestScoped
 public class AnswerList {
-	private ExerciseService service;
+	private AnswerService service;
 	private List<Answer> answers;
 
 	@Inject
-	public AnswerList(ExerciseService service){
+	public AnswerList(AnswerService service){
 		this.service = service;
 	}
 

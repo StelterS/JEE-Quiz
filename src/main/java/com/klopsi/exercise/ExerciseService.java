@@ -1,15 +1,16 @@
 package com.klopsi.exercise;
 
-import com.klopsi.exercise.model.Answer;
+import com.klopsi.answer.AnswerService;
+import com.klopsi.answer.model.Answer;
 import com.klopsi.exercise.model.Difficulty;
 import com.klopsi.exercise.model.Exercise;
 import lombok.NoArgsConstructor;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,25 +18,17 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class ExerciseService {
 	private final List<Exercise> exercises = new ArrayList<>();
-	private final List<Answer> answers = new ArrayList<>();
+	private AnswerService answerService;
+
+	@Inject
+	public ExerciseService(AnswerService answerService){
+		this.answerService = answerService;
+	}
 
 	@PostConstruct
 	public void init(){
 		exercises.add(new Exercise(1, "Chrzest Polski", "Kiedy odbył się chrzest Polski?", Difficulty.EASY, 10, List.of()));
 		exercises.add(new Exercise(2, "Polski Maluch", "Kiedy rozpoczęła się produkcja Malucha?", Difficulty.MEDIUM, 25, List.of()));
-		answers.add(new Answer(1, "1972", 100, LocalDate.of(2019, 10, 10), exercises.get(1)));
-		answers.add(new Answer(2, "996", 100, LocalDate.of(2017, 9, 10), exercises.get(0)));
-		answers.add(new Answer(3, "1968", 75, LocalDate.of(2016, 10, 21), exercises.get(1)));
-		exercises.get(0).setAnswers(List.of(answers.get(1)));
-		exercises.get(1).setAnswers(List.of(answers.get(0), answers.get(2)));
-	}
-
-	public synchronized List<Answer> findAllAnswers() {
-		return answers.stream().map(Answer::new).collect(Collectors.toList());
-	}
-
-	public synchronized Answer findAnswer(int id) {
-		return answers.stream().filter(answer -> answer.getId() == id).findFirst().map(Answer::new).orElse(null);
 	}
 
 	public synchronized List<Exercise> findAllExercises() {
@@ -46,16 +39,9 @@ public class ExerciseService {
 		return exercises.stream().filter(exercise -> exercise.getId() == id).findFirst().map(Exercise::new).orElse(null);
 	}
 
-	public void removeAnswer(Answer answer) {
-		// remove from corresponding exercise
-		deleteAnsFromCorrespondingExercises(answer);
-		// remove answer from service aka "database"
-		answers.removeIf(a -> a.equals(answer));
-	}
-
 	public void removeExercise(Exercise exercise) {
 		// remove all corresponding answers
-		answers.removeIf(answer -> exercise.getAnswers().stream().anyMatch(element -> element.getId() == answer.getId()));
+		answerService.deleteAnswerFromExercise(exercise);
 		// remove exercise itself
 		exercises.removeIf(e -> e.equals(exercise));
 	}
@@ -73,11 +59,7 @@ public class ExerciseService {
 			// update exercise
 			exercises.removeIf(e -> e.getId() == exercise.getId());
 			exercises.add(new Exercise(exercise));
-			for (Answer answer : answers) {
-				if (answer.getExercise().getId() == exercise.getId()) {
-					answer.setExercise(exercise);
-				}
-			}
+			answerService.addExerciseToAnswer(exercise);
 		}
 		else {
 			exercise.setId(exercises.stream().mapToInt(Exercise::getId).max().orElse(0) + 1);
@@ -85,20 +67,7 @@ public class ExerciseService {
 		}
 	}
 
-	public synchronized void saveAnswer(Answer answer){
-		if(answer.getId() != 0) {
-			// remove from corresponding exercise
-			System.out.println("Usuwanie");
-			deleteAnsFromCorrespondingExercises(answer);
-			// change element
-			answers.removeIf(a -> a.getId() == answer.getId());
-			answers.add(new Answer(answer));
-		}
-		else {
-			answer.setId(answers.stream().mapToInt(Answer::getId).max().orElse(0) + 1);
-			answers.add(new Answer(answer));
-		}
-		// add answer to corresponding exercise
+	public void addAnswerToExercise(Answer answer) {
 		for(Exercise exercise : exercises) {
 			if (exercise.getId() == answer.getExercise().getId()) {
 				List<Answer> newAnswers = exercise.getAnswers().stream().map(Answer::new).collect(Collectors.toList());

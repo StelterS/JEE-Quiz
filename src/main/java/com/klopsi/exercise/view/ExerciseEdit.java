@@ -32,6 +32,15 @@ public class ExerciseEdit implements Serializable {
 		return List.of(Difficulty.values());
 	}
 
+	private List<Exercise> availableExercises;
+
+	public Collection<Exercise> getAvailableExercises() {
+		if(availableExercises == null) {
+			availableExercises = service.findAllExercises();
+		}
+		return availableExercises;
+	}
+
 	public String saveExercise(){
 		service.saveExercise(exercise);
 		return "exercise_list?faces-redirect=true";

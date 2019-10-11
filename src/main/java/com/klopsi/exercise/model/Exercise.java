@@ -1,6 +1,6 @@
 package com.klopsi.exercise.model;
 
-import com.klopsi.exercise.model.Answer;
+import com.klopsi.answer.model.Answer;
 import lombok.*;
 
 import javax.validation.constraints.Min;

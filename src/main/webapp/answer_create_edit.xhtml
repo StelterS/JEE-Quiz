@@ -28,7 +28,7 @@
 
                 <h:outputLabel value="Exercise:" for="exercise"/>
                 <h:selectOneMenu id="exercise" collectionType="java.util.ArrayList" value="#{answerEdit.answer.exercise}">
-                    <f:selectItems value="#{answerEdit.availableExercises}" var="exercise" itemValue="#{exercise}" itemLabel="#{exercise.title}"/>
+                    <f:selectItems value="#{exerciseEdit.availableExercises}" var="exercise" itemValue="#{exercise}" itemLabel="#{exercise.title}"/>
                 </h:selectOneMenu>
                 <h:message for="exercise"/>
 

@@ -1,7 +1,8 @@
-package com.klopsi.exercise.view;
+package com.klopsi.answer.view;
 
+import com.klopsi.answer.AnswerService;
+import com.klopsi.answer.model.Answer;
 import com.klopsi.exercise.ExerciseService;
-import com.klopsi.exercise.model.Answer;
 import com.klopsi.exercise.model.Exercise;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,8 +18,7 @@ import java.util.List;
 @Named
 @ViewScoped
 public class AnswerEdit implements Serializable {
-	private ExerciseService service;
-	private List<Exercise> availableExercises;
+	private AnswerService service;
 
 	@Getter
 	@Setter
@@ -29,20 +29,13 @@ public class AnswerEdit implements Serializable {
 	private Answer lastAnswer;
 
 	@Inject
-	public AnswerEdit(ExerciseService service){
+	public AnswerEdit(AnswerService service){
 		this.service = service;
-	}
-
-	public Collection<Exercise> getAvailableExercises() {
-		if(availableExercises == null) {
-			availableExercises = service.findAllExercises();
-		}
-		return availableExercises;
 	}
 
 	public String saveAnswer() {
 		if (lastAnswer.getId() != 0){
-			service.deleteAnsFromCorrespondingExercises(lastAnswer);
+			service.deleteAnswerFromExerciseList(lastAnswer);
 		}
 		service.saveAnswer(answer);
 		return "answer_list?faces-redirect=true";

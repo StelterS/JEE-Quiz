@@ -1,7 +1,8 @@
-package com.klopsi.exercise.view.converter;
+package com.klopsi.answer.view.converter;
 
+import com.klopsi.answer.AnswerService;
+import com.klopsi.answer.model.Answer;
 import com.klopsi.exercise.ExerciseService;
-import com.klopsi.exercise.model.Answer;
 
 import javax.enterprise.context.Dependent;
 import javax.faces.component.UIComponent;
@@ -13,10 +14,10 @@ import javax.inject.Inject;
 @FacesConverter(forClass = Answer.class, managed = true)
 @Dependent
 public class AnswerConverter implements Converter<Answer> {
-	private ExerciseService service;
+	private AnswerService service;
 
 	@Inject
-	public AnswerConverter(ExerciseService service){
+	public AnswerConverter(AnswerService service){
 		this.service = service;
 	}
 
