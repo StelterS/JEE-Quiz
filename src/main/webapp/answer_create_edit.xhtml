@@ -5,8 +5,8 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="/WEB-INF/templates/main.xhtml">
     <f:metadata>
-        <f:viewParam name="answer" value="#{answerEdit.answer}" required="true"/>
-        <f:viewAction action="#{answerEdit.saveLastExercise}"/>
+        <f:viewParam name="answer" value="#{answerEdit.answerId}" required="false"/>
+        <f:viewAction action="#{answerEdit.initialize}"/>
     </f:metadata>
 
     <ui:define name="content">

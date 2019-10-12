@@ -1,5 +1,6 @@
 package com.klopsi.exercise.view;
 
+import com.klopsi.answer.model.Answer;
 import com.klopsi.exercise.ExerciseService;
 import com.klopsi.exercise.model.Difficulty;
 import com.klopsi.exercise.model.Exercise;
@@ -22,6 +23,10 @@ public class ExerciseEdit implements Serializable {
 	@Getter
 	@Setter
 	private Exercise exercise;
+
+	@Getter
+	@Setter
+	private Integer exerciseId;
 
 	@Inject
 	public ExerciseEdit(ExerciseService service){
@@ -46,9 +51,12 @@ public class ExerciseEdit implements Serializable {
 		return "exercise_list?faces-redirect=true";
 	}
 
-	@PostConstruct
-	public void init(){
-		setExercise(new Exercise());
+	public void initialize() {
+		if(exerciseId == null) {
+			setExercise(new Exercise());
+		}
+		else {
+			setExercise(service.findExercise(exerciseId));
+		}
 	}
-
 }

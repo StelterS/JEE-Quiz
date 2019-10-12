@@ -28,6 +28,10 @@ public class AnswerEdit implements Serializable {
 	@Setter
 	private Answer lastAnswer;
 
+	@Getter
+	@Setter
+	private Integer answerId;
+
 	@Inject
 	public AnswerEdit(AnswerService service){
 		this.service = service;
@@ -41,12 +45,13 @@ public class AnswerEdit implements Serializable {
 		return "answer_list?faces-redirect=true";
 	}
 
-	public void saveLastExercise() {
+	public void initialize() {
+		if(answerId == null) {
+			setAnswer(new Answer());
+		}
+		else {
+			setAnswer(service.findAnswer(answerId));
+		}
 		setLastAnswer(new Answer(answer));
-	}
-
-	@PostConstruct
-	public void init() {
-		setAnswer(new Answer());
 	}
 }

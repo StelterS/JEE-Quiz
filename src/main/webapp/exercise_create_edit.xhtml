@@ -6,7 +6,8 @@
                 template="/WEB-INF/templates/main.xhtml">
 
     <f:metadata>
-        <f:viewParam name="exercise" value="#{exerciseEdit.exercise}" required="true"/>
+        <f:viewParam name="exercise" value="#{exerciseEdit.exerciseId}" required="false"/>
+        <f:viewAction action="#{exerciseEdit.initialize}"/>
     </f:metadata>
 
     <ui:define name="content">
