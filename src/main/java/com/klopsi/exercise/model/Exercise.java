@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -32,6 +33,19 @@ public class Exercise implements Serializable {
 	private Integer maxPoints;
 
 	private List<Answer> answers;
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Exercise exercise = (Exercise) o;
+		return id == exercise.id;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
 
 	public Exercise(Exercise exercise){
 		this.id = exercise.id;
