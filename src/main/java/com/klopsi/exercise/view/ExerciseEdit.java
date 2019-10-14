@@ -20,13 +20,15 @@ import java.util.List;
 public class ExerciseEdit implements Serializable {
 	private ExerciseService service;
 
-	@Getter
 	@Setter
 	private Exercise exercise;
 
-	@Getter
-	@Setter
-	private Integer exerciseId;
+	public Exercise getExercise() {
+		if(exercise == null) {
+			exercise = new Exercise();
+		}
+		return exercise;
+	}
 
 	@Inject
 	public ExerciseEdit(ExerciseService service){
@@ -49,14 +51,5 @@ public class ExerciseEdit implements Serializable {
 	public String saveExercise(){
 		service.saveExercise(exercise);
 		return "exercise_list?faces-redirect=true";
-	}
-
-	public void initialize() {
-		if(exerciseId == null) {
-			setExercise(new Exercise());
-		}
-		else {
-			setExercise(service.findExercise(exerciseId));
-		}
 	}
 }

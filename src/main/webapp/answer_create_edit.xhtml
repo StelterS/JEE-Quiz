@@ -5,8 +5,7 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="/WEB-INF/templates/main.xhtml">
     <f:metadata>
-        <f:viewParam name="answer" value="#{answerEdit.answerId}" required="false"/>
-        <f:viewAction action="#{answerEdit.initialize}"/>
+        <f:viewParam name="answer" value="#{answerEdit.answer}" required="false"/>
     </f:metadata>
 
     <ui:define name="content">

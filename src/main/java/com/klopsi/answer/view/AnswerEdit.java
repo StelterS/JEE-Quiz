@@ -20,17 +20,20 @@ import java.util.List;
 public class AnswerEdit implements Serializable {
 	private AnswerService service;
 
-	@Getter
 	@Setter
 	private Answer answer;
+
+	public Answer getAnswer() {
+		if(answer == null) {
+			answer = new Answer();
+		}
+		setLastAnswer(new Answer(answer));
+		return answer;
+	}
 
 	@Getter
 	@Setter
 	private Answer lastAnswer;
-
-	@Getter
-	@Setter
-	private Integer answerId;
 
 	@Inject
 	public AnswerEdit(AnswerService service){
@@ -45,13 +48,4 @@ public class AnswerEdit implements Serializable {
 		return "answer_list?faces-redirect=true";
 	}
 
-	public void initialize() {
-		if(answerId == null) {
-			setAnswer(new Answer());
-		}
-		else {
-			setAnswer(service.findAnswer(answerId));
-		}
-		setLastAnswer(new Answer(answer));
-	}
 }
