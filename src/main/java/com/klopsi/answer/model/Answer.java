@@ -3,7 +3,6 @@ package com.klopsi.answer.model;
 import com.klopsi.exercise.model.Exercise;
 import lombok.*;
 
-import javax.validation.Constraint;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;

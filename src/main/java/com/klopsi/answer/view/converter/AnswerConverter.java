@@ -2,7 +2,6 @@ package com.klopsi.answer.view.converter;
 
 import com.klopsi.answer.AnswerService;
 import com.klopsi.answer.model.Answer;
-import com.klopsi.exercise.ExerciseService;
 
 import javax.enterprise.context.Dependent;
 import javax.faces.component.UIComponent;

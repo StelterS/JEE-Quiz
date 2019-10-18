@@ -2,7 +2,6 @@ package com.klopsi.answer.view;
 
 import com.klopsi.answer.AnswerService;
 import com.klopsi.answer.model.Answer;
-import com.klopsi.exercise.ExerciseService;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
