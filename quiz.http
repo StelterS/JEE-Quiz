@@ -1,0 +1,112 @@
+# For a quick start check out our HTTP Requests collection (Tools|HTTP Client|Open HTTP Requests Collection) or
+# paste cURL into the file and request will be converted to HTTP Request format.
+#
+# Following HTTP Request Live Templates are available:
+# * 'gtrp' and 'gtr' create a GET request with or without query parameters;
+# * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
+# * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
+
+# http://localhost:8080/quiz-1.0-SNAPSHOT/
+
+# get all exercises
+GET http://localhost:8080/quiz-1.0-SNAPSHOT/api/exercises
+Accept: application/json
+
+###
+
+# get single exercise
+GET http://localhost:8080/quiz-1.0-SNAPSHOT/api/exercises/1
+Accept: application/json
+
+###
+
+# upload new exericse
+POST http://localhost:8080/quiz-1.0-SNAPSHOT/api/exercises
+Content-Type: application/json
+
+{
+  "title": "Mały krok dla człowieka",
+  "content": "Jak miał na nazwisko pierwszy człowiek, który stanął na Księżycu?",
+  "difficulty": "EASY",
+  "maxPoints": 10,
+  "answers": []
+}
+
+###
+
+# update exercise
+PUT http://localhost:8080/quiz-1.0-SNAPSHOT/api/exercises/3
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": 3,
+  "title": "Mały kroczek",
+  "content": "Jak miał na nazwisko pierwszy człowiek, który stanął na Księżycu?",
+  "difficulty": "EASY",
+  "maxPoints": 10,
+  "answers": []
+}
+
+###
+
+# delete single exercise by given id
+DELETE http://localhost:8080/quiz-1.0-SNAPSHOT/api/exercises/3
+
+###
+
+###
+
+GET http://localhost:8080/quiz-1.0-SNAPSHOT/api/answers
+Accept: application/json
+
+###
+
+GET http://localhost:8080/quiz-1.0-SNAPSHOT/api/answers/1
+Accept: application/json
+
+###
+
+POST http://localhost:8080/quiz-1.0-SNAPSHOT/api/answers
+Content-Type: application/json
+
+{
+  "content": "1972",
+  "percent": 100,
+  "submissionDate": "2016-12-12",
+  "exercise": {
+    "answers": [],
+    "content": "Kiedy rozpoczęła się produkcja Malucha?",
+    "difficulty": "MEDIUM",
+    "id": 2,
+    "maxPoints": 25,
+    "title": "Polski Maluch"
+  }
+}
+
+###
+
+PUT http://localhost:8080/quiz-1.0-SNAPSHOT/api/answers/1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "content": "1980",
+  "percent": 80,
+  "id": 1,
+  "submissionDate": "2016-12-12",
+  "exercise": {
+    "answers": [],
+    "content": "Kiedy rozpoczęła się produkcja Malucha?",
+    "difficulty": "MEDIUM",
+    "id": 2,
+    "maxPoints": 25,
+    "title": "Polski Maluch"
+  }
+}
+
+###
+
+DELETE http://localhost:8080/quiz-1.0-SNAPSHOT/api/answers/1
+
+###
