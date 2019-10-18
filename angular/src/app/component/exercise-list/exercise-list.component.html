@@ -1,0 +1,51 @@
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Content</th>
+    <th>Difficulty</th>
+    <th>Max Points</th>
+    <th>Answers</th>
+  </tr>
+  <tr *ngFor="let exercise of exercises | async">
+    <td>
+      {{exercise.id}}
+    </td>
+
+    <td>
+      {{exercise.title}}
+    </td>
+
+    <td>
+      {{exercise.content}}
+    </td>
+
+    <td>
+      {{exercise.difficulty}}
+    </td>
+
+    <td>
+      {{exercise.maxPoints}}
+    </td>
+
+    <td>
+      <table>
+        <tr *ngFor="let answer of exercise.answers">
+          <td>
+            {{answer.content}}
+          </td>
+        </tr>
+      </table>
+    </td>
+
+    <td>
+      <button [routerLink]="['/exercises', exercise.id, 'edit']">Edit</button>
+    </td>
+
+    <td>
+      <button (click)="remove(exercise)">Delete</button>
+    </td>
+
+  </tr>
+</table>
+<button [routerLink]="['/exercises/create']">Create</button>

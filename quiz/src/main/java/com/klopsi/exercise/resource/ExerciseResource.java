@@ -24,7 +24,6 @@ public class ExerciseResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Exercise> getAllExercises(){
-		System.out.println("Get them all buahahaha!");
 		return exerciseService.findAllExercises();
 	}
 

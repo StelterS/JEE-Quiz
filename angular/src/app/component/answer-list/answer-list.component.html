@@ -1,0 +1,39 @@
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Content</th>
+    <th>Submission Date</th>
+    <th>Score [%]</th>
+    <th>Title</th>
+  </tr>
+  <tr *ngFor="let answer of answers | async">
+    <td>
+      {{answer.id}}
+    </td>
+
+    <td>
+      {{answer.content}}
+    </td>
+
+    <td>
+      {{answer.submissionDate}}
+    </td>
+
+    <td>
+      {{answer.percent}}
+    </td>
+
+    <td>
+      {{answer.exercise.title}}
+    </td>
+
+    <td>
+      <button [routerLink]="['/answers', answer.id, 'edit']">Edit</button>
+    </td>
+
+    <td>
+      <button (click)="remove(answer)">Delete</button>
+    </td>
+  </tr>
+</table>
+<button [routerLink]="['/answers/create']">Create</button>

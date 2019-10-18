@@ -1,0 +1,43 @@
+<form #answerForm="ngForm" *ngIf="answer">
+  <table>
+    <tr>
+      <td><label for="content">Content:</label></td>
+      <td>
+        <input type="text" id="content" name="content" [(ngModel)]="answer.content" required #content="ngModel">
+        <div *ngIf="content.invalid && (content.dirty || content.touched)">Specify content</div>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="score">Score [%]:</label></td>
+      <td>
+        <input type="text" id="score" name="score" [(ngModel)]="answer.percent" required #score="ngModel">
+        <div *ngIf="score.invalid && (score.dirty || score.touched)">Specify score</div>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="submissionDate">Submission date:</label></td>
+      <td>
+        <input type="date" id="submissionDate" name="submissionDate" [(ngModel)]="answer.submissionDate" required #date="ngModel">
+        <div *ngIf="date.invalid && (date.dirty || date.touched)">Specify date</div>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="exercise">Exercise:</label></td>
+      <td>
+        <select [(ngModel)]="answer.exercise" id="exercise" name="exercise" [compareWith]="compareExercises" required #exercise="ngModel">
+          <option *ngFor="let exercise of availableExercises" [ngValue]="exercise">
+            {{exercise.title}}
+          </option>
+        </select>
+        <div *ngIf="exercise.invalid && (exercise.dirty || exercise.touched)">Chose exercise</div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button type="button" (click)="save()" [disabled]="!answerForm.valid">Save</button>
+      </td>
+      <td></td>
+    </tr>
+  </table>
+</form>
+<button routerLink="/answers">Back</button>
