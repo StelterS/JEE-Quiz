@@ -62,10 +62,20 @@ public class AnswerService {
 
 	// does not delete answer from corresponding exercise (one way deletion)
 	public void deleteAnswerFromExercise(Exercise exercise) {
+		List<Answer> exerciseAnswers = exercise.getAnswers().stream().map(Answer::new).collect(Collectors.toList());
+		for (Answer answer : exerciseAnswers) {
+			userService.deleteAnsFromCorrespondingUser(answer);
+		}
+		// delete those answers
 		answers.removeIf(answer -> exercise.getAnswers().stream().anyMatch(element -> element.getId() == answer.getId()));
 	}
 
 	public void deleteUserAnswers(User user) {
+		List<Answer> userAnswers = user.getAnswers().stream().map(Answer::new).collect(Collectors.toList());
+		for (Answer answer : userAnswers) {
+			exerciseService.deleteAnsFromCorrespondingExercises(answer);
+		}
+		// delete all those answers as well
 		answers.removeIf(answer -> user.getAnswers().stream().anyMatch(element -> element.getId() == answer.getId()));
 	}
 

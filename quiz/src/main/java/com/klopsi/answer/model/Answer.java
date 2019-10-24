@@ -43,5 +43,6 @@ public class Answer implements Serializable {
 		this.exercise = answer.exercise;
 		this.percent = answer.percent;
 		this.submissionDate = answer.submissionDate;
+		this.user = answer.user;
 	}
 }

@@ -55,6 +55,7 @@ public class AnswerResource {
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		} else {
 			answerService.deleteAnswerFromExerciseList(originalAnswer);
+			answerService.deleteAnswerFromUserList(originalAnswer);
 			answerService.saveAnswer(answer);
 			return Response.ok().build();
 		}
