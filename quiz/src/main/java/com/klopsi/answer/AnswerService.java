@@ -3,6 +3,8 @@ package com.klopsi.answer;
 import com.klopsi.answer.model.Answer;
 import com.klopsi.exercise.ExerciseService;
 import com.klopsi.exercise.model.Exercise;
+import com.klopsi.user.UserService;
+import com.klopsi.user.model.User;
 import lombok.NoArgsConstructor;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -16,10 +18,12 @@ import java.util.stream.Collectors;
 public class AnswerService {
 	private final List<Answer> answers = new ArrayList<>();
 	private ExerciseService exerciseService;
+	private UserService userService;
 
 	@Inject
-	public AnswerService(ExerciseService exerciseService) {
+	public AnswerService(ExerciseService exerciseService, UserService userService) {
 		this.exerciseService = exerciseService;
+		this.userService = userService;
 	}
 
 	public synchronized List<Answer> findAllAnswers() {
@@ -33,6 +37,7 @@ public class AnswerService {
 	public void removeAnswer(Answer answer) {
 		// remove from corresponding exercise
 		exerciseService.deleteAnsFromCorrespondingExercises(answer);
+		userService.deleteAnsFromCorrespondingUser(answer);
 		// remove answer from service aka "database"
 		answers.removeIf(a -> a.equals(answer));
 	}
@@ -41,6 +46,7 @@ public class AnswerService {
 		if(answer.getId() != 0) {
 			// remove from corresponding exercise
 			exerciseService.deleteAnsFromCorrespondingExercises(answer);
+			userService.deleteAnsFromCorrespondingUser(answer);
 			// change element
 			answers.removeIf(a -> a.getId() == answer.getId());
 			answers.add(new Answer(answer));
@@ -51,11 +57,16 @@ public class AnswerService {
 		}
 		// add answer to corresponding exercise
 		exerciseService.addAnswerToExercise(answer);
+		userService.addAnswerToUser(answer);
 	}
 
 	// does not delete answer from corresponding exercise (one way deletion)
 	public void deleteAnswerFromExercise(Exercise exercise) {
 		answers.removeIf(answer -> exercise.getAnswers().stream().anyMatch(element -> element.getId() == answer.getId()));
+	}
+
+	public void deleteUserAnswers(User user) {
+		answers.removeIf(answer -> user.getAnswers().stream().anyMatch(element -> element.getId() == answer.getId()));
 	}
 
 	public void addExerciseToAnswer(Exercise exercise) {
@@ -66,8 +77,20 @@ public class AnswerService {
 		}
 	}
 
+	public void addUserToAnswer(User user) {
+		for(Answer answer : answers) {
+			if (answer.getUser().getId() == user.getId()) {
+				answer.setUser(user);
+			}
+		}
+	}
+
 	public void deleteAnswerFromExerciseList(Answer answer) {
 		exerciseService.deleteAnsFromCorrespondingExercises(answer);
+	}
+
+	public void deleteAnswerFromUserList(Answer answer) {
+		userService.deleteAnsFromCorrespondingUser(answer);
 	}
 
 }
