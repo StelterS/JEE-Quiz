@@ -3,7 +3,6 @@ import {Exercise} from '../../model/exercise';
 import {Difficulty} from '../../model/defficulty.enum';
 import {ExerciseService} from '../../service/exercise.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-exercise-edit',

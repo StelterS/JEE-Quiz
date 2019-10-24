@@ -2,8 +2,6 @@ package com.klopsi.user;
 
 import com.klopsi.answer.AnswerService;
 import com.klopsi.answer.model.Answer;
-import com.klopsi.exercise.model.Difficulty;
-import com.klopsi.exercise.model.Exercise;
 import com.klopsi.user.model.User;
 import lombok.NoArgsConstructor;
 

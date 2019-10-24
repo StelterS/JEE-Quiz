@@ -81,6 +81,13 @@ Content-Type: application/json
     "id": 2,
     "maxPoints": 25,
     "title": "Polski Maluch"
+  },
+  "user": {
+    "answers": [],
+    "birthDate": "1879-03-14",
+    "firstName": "Albert",
+    "id": 1,
+    "lastName": "Einstein"
   }
 }
 
@@ -108,5 +115,9 @@ Content-Type: application/json
 ###
 
 DELETE http://localhost:8080/quiz-1.0-SNAPSHOT/api/answers/1
+
+###
+
+DELETE http://localhost:8080/quiz-1.0-SNAPSHOT/api/users/1
 
 ###
