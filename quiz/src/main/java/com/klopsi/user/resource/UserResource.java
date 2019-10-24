@@ -1,17 +1,27 @@
 package com.klopsi.user.resource;
 
+import com.klopsi.answer.model.Answer;
+import com.klopsi.resource.Api;
+import com.klopsi.resource.model.EmbeddedResource;
+import com.klopsi.resource.model.Link;
 import com.klopsi.user.UserService;
 import com.klopsi.user.model.User;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.*;
 import java.util.Collection;
+import java.util.List;
+
+import static com.klopsi.resource.UriHelper.pagedUri;
+import static com.klopsi.resource.UriHelper.uri;
 
 @Path("/users")
 public class UserResource {
+
+	@Context
+	private UriInfo info;
+
 	@Inject
 	private UserService userService;
 
@@ -22,8 +32,24 @@ public class UserResource {
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<User> getAllExercises(){
-		return userService.findAllUsers();
+	@Path("")
+	public Response getAllUsers(){
+		List<User> users = userService.findAllUsers();
+
+		users.forEach(user -> user.getLinks().put(
+			"self",
+			Link.builder().href(uri(info, UserResource.class, "getUser", user.getId())).build())
+		);
+
+		EmbeddedResource.EmbeddedResourceBuilder<List<User>> builder = EmbeddedResource.<List<User>>builder()
+			.embedded("users", users);
+
+		builder.link(
+			"api",
+			Link.builder().href(uri(info, Api.class, "getApi")).build());
+
+		EmbeddedResource<List<User>> embedded = builder.build();
+		return Response.ok(embedded).build();
 	}
 
 
@@ -36,15 +62,49 @@ public class UserResource {
 	@GET
 	@Path("{userId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getExercise(@PathParam("userId") int userId){
+	public Response getUser(@PathParam("userId") int userId){
 		User user = userService.findUser(userId);
 		if (user != null) {
+			user.getLinks().put(
+				"self",
+				Link.builder().href(uri(info, UserResource.class, "getUser", user.getId())).build());
+
+			user.getLinks().put(
+				"answers",
+				Link.builder().href(uri(info, UserResource.class, "getUserAnswers", user.getId())).build());
+
+			user.getLinks().put(
+				"users",
+				Link.builder().href(uri(info, UserResource.class, "getAllUsers")).build());
 			return Response.ok(user).build();
 		}
 		else {
 			return Response.status(Response.Status.NOT_FOUND).build();
 		}
 	}
+
+	@GET
+	@Path("{userId}/answers")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getUserAnswers(@PathParam("userId") int userId) {
+		User user = userService.findUser(userId);
+		if (user != null) {
+			EmbeddedResource<List<Answer>> embedded = EmbeddedResource.<List<Answer>>builder()
+				.embedded("authors", user.getAnswers())
+				.link(
+					"user",
+					Link.builder().href(uri(info, UserResource.class, "getUser", user.getId())).build())
+
+				.link(
+					"self",
+					Link.builder().href(uri(info, UserResource.class, "getUserAnswers", user.getId())).build())
+				.build();
+			return Response.ok(embedded).build();
+		} else {
+			return Response.status(Response.Status.NOT_FOUND).build();
+		}
+	}
+
 
 	/**
 	 * Saves new user
@@ -53,11 +113,9 @@ public class UserResource {
 	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response saveExercise(User user) {
+	public Response saveUser(User user) {
 		userService.saveUser(user);
-		return Response
-			.created(UriBuilder.fromResource(UserResource.class).path(UserResource.class, "getUser").build(user.getId()))
-			.build();
+		return Response.created(uri(UserResource.class, "getUser", user.getId())).build();
 	}
 
 	/**
@@ -69,7 +127,7 @@ public class UserResource {
 	@PUT
 	@Path("{userId}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateExercise(@PathParam("userId") int userId, User user) {
+	public Response updateUser(@PathParam("userId") int userId, User user) {
 		User originalUser = userService.findUser(userId);
 		if (originalUser == null) {
 			return Response.status(Response.Status.NOT_FOUND).build();
@@ -91,7 +149,7 @@ public class UserResource {
 	 */
 	@DELETE
 	@Path("{userId}")
-	public Response deleteExercise(@PathParam("userId") int userId) {
+	public Response deleteUser(@PathParam("userId") int userId) {
 		User user = userService.findUser(userId);
 		if (user == null) {
 			return Response.status(Response.Status.NOT_FOUND).build();

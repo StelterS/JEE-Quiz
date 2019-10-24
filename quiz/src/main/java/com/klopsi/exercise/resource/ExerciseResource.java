@@ -1,17 +1,24 @@
 package com.klopsi.exercise.resource;
 
+import com.klopsi.answer.model.Answer;
 import com.klopsi.exercise.ExerciseService;
 import com.klopsi.exercise.model.Exercise;
+import com.klopsi.resource.Api;
+import com.klopsi.resource.model.EmbeddedResource;
+import com.klopsi.resource.model.Link;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-import java.util.Collection;
+import javax.ws.rs.core.*;
+import java.util.List;
+
+import static com.klopsi.resource.UriHelper.uri;
 
 @Path("/exercises")
 public class ExerciseResource {
+
+	@Context
+	private UriInfo info;
 
 	@Inject
 	private ExerciseService exerciseService;
@@ -23,8 +30,24 @@ public class ExerciseResource {
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Exercise> getAllExercises(){
-		return exerciseService.findAllExercises();
+	@Path("")	// required for URL generation
+	public Response getAllExercises(@QueryParam("page") @DefaultValue("0") Integer page){
+		List<Exercise> exercises = exerciseService.findAllExercises();
+
+		exercises.forEach(exercise -> exercise.getLinks().put(
+			"self",
+			Link.builder().href(uri(info, ExerciseResource.class, "getExercise", exercise.getId())).build()
+		));
+
+		EmbeddedResource.EmbeddedResourceBuilder<List<Exercise>> builder = EmbeddedResource.<List<Exercise>>builder()
+			.embedded("exercises", exercises);
+
+		builder.link(
+			"api",
+			Link.builder().href(uri(info, Api.class, "getApi")).build());
+
+		EmbeddedResource<List<Exercise>> embedded = builder.build();
+		return Response.ok(embedded).build();
 	}
 
 
@@ -40,12 +63,49 @@ public class ExerciseResource {
 	public Response getExercise(@PathParam("exerciseId") int exerciseId){
 		Exercise exercise = exerciseService.findExercise(exerciseId);
 		if (exercise != null) {
+			exercise.getLinks().put(
+				"self",
+				Link.builder().href(uri(info, ExerciseResource.class, "getExercise", exercise.getId())).build());
+
+			exercise.getLinks().put(
+				"answers",
+				Link.builder().href(uri(info, ExerciseResource.class, "getExerciseAnswers", exercise.getId())).build());
+
+			exercise.getLinks().put(
+				"exercises",
+				Link.builder().href(uri(info, ExerciseResource.class, "getAllExercises")).build());
+
 			return Response.ok(exercise).build();
 		}
 		else {
 			return Response.status(Response.Status.NOT_FOUND).build();
 		}
 	}
+
+
+	@GET
+	@Path("{exerciseId}/answers")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getExerciseAnswers(@PathParam("exerciseId") int exerciseId) {
+		Exercise exercise = exerciseService.findExercise(exerciseId);
+		if (exercise != null) {
+			EmbeddedResource<List<Answer>> embedded = EmbeddedResource.<List<Answer>>builder()
+				.embedded("answers", exercise.getAnswers())
+				.link(
+					"exercise",
+					Link.builder().href(uri(info, ExerciseResource.class, "getExercise", exercise.getId())).build())
+
+				.link(
+					"self",
+					Link.builder().href(uri(info, ExerciseResource.class, "getExerciseAnswers", exercise.getId())).build())
+				.build();
+			return Response.ok(embedded).build();
+		}
+		else {
+			return Response.status(Response.Status.NOT_FOUND).build();
+		}
+	}
+
 
 	/**
 	 * Saves new exercise
@@ -57,8 +117,7 @@ public class ExerciseResource {
 	public Response saveExercise(Exercise exercise) {
 		exerciseService.saveExercise(exercise);
 		return Response
-			.created(UriBuilder.fromResource(ExerciseResource.class).path(ExerciseResource.class, "getExercise").build(exercise.getId()))
-			.build();
+			.created(uri(ExerciseResource.class, "getExercise", exercise.getId())).build();
 	}
 
 	/**

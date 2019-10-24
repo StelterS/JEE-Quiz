@@ -1,14 +1,16 @@
 package com.klopsi.exercise.model;
 
 import com.klopsi.answer.model.Answer;
+import com.klopsi.resource.model.Link;
 import lombok.*;
 
+import javax.json.bind.annotation.JsonbProperty;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Getter
 @Setter
@@ -32,7 +34,8 @@ public class Exercise implements Serializable {
 	@NotNull
 	private Integer maxPoints;
 
-	private List<Answer> answers;
+	@JsonbTransient
+	private List<Answer> answers = new ArrayList<>();
 
 	@Override
 	public boolean equals(Object o) {
@@ -47,6 +50,15 @@ public class Exercise implements Serializable {
 		return Objects.hash(id);
 	}
 
+	public Exercise(int id, String title, String content, Difficulty difficulty, Integer maxPoints, List<Answer> answers) {
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.difficulty = difficulty;
+		this.maxPoints = maxPoints;
+		this.answers = answers;
+	}
+
 	public Exercise(Exercise exercise){
 		this.id = exercise.id;
 		this.title = exercise.title;
@@ -55,5 +67,8 @@ public class Exercise implements Serializable {
 		this.maxPoints = exercise.maxPoints;
 		this.answers = exercise.answers;
 	}
+
+	@JsonbProperty("_links")
+	private Map<String, Link> links = new HashMap<>();
 
 }
