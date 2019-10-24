@@ -1,6 +1,7 @@
 package com.klopsi.answer.model;
 
 import com.klopsi.exercise.model.Exercise;
+import com.klopsi.user.model.User;
 import lombok.*;
 
 import javax.validation.constraints.Max;
@@ -32,6 +33,9 @@ public class Answer implements Serializable {
 
 	@NotNull
 	private Exercise exercise;
+
+	@NotNull
+	private User user;
 
 	public Answer(Answer answer){
 		this.id = answer.id;
