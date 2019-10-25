@@ -12,6 +12,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.util.List;
 
+import static com.klopsi.resource.UriHelper.pagedUri;
 import static com.klopsi.resource.UriHelper.uri;
 
 @Path("/exercises")
@@ -45,6 +46,10 @@ public class ExerciseResource {
 		builder.link(
 			"api",
 			Link.builder().href(uri(info, Api.class, "getApi")).build());
+
+		builder.link(
+			"self",
+			Link.builder().href(uri(info, ExerciseResource.class, "getAllExercises")).build());
 
 		EmbeddedResource<List<Exercise>> embedded = builder.build();
 		return Response.ok(embedded).build();

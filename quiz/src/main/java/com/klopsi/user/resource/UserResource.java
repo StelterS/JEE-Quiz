@@ -1,6 +1,7 @@
 package com.klopsi.user.resource;
 
 import com.klopsi.answer.model.Answer;
+import com.klopsi.answer.resource.AnswerResource;
 import com.klopsi.resource.Api;
 import com.klopsi.resource.model.EmbeddedResource;
 import com.klopsi.resource.model.Link;
@@ -10,10 +11,8 @@ import com.klopsi.user.model.User;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
-import java.util.Collection;
 import java.util.List;
 
-import static com.klopsi.resource.UriHelper.pagedUri;
 import static com.klopsi.resource.UriHelper.uri;
 
 @Path("/users")
@@ -47,6 +46,10 @@ public class UserResource {
 		builder.link(
 			"api",
 			Link.builder().href(uri(info, Api.class, "getApi")).build());
+
+		builder.link(
+			"self",
+			Link.builder().href(uri(info, UserResource.class, "getAllUsers")).build());
 
 		EmbeddedResource<List<User>> embedded = builder.build();
 		return Response.ok(embedded).build();

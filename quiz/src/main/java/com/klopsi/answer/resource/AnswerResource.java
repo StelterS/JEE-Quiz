@@ -44,6 +44,10 @@ public class AnswerResource {
 			"api",
 			Link.builder().href(uri(info, Api.class, "getApi")).build());
 
+		builder.link(
+			"self",
+			Link.builder().href(uri(info, AnswerResource.class, "getAllAnswers")).build());
+
 		EmbeddedResource<List<Answer>> embedded = builder.build();
 		return Response.ok(embedded).build();
 	}
