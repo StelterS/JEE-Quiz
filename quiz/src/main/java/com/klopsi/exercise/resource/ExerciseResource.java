@@ -32,13 +32,18 @@ public class ExerciseResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("")	// required for URL generation
-	public Response getAllExercises(@QueryParam("page") @DefaultValue("0") Integer page){
-		List<Exercise> exercises = exerciseService.findAllExercises();
+	public Response getAllExercises(@QueryParam("page") @DefaultValue("0") Integer page, @QueryParam("limit") @DefaultValue("10") Integer limit){
+		if(limit <= 0){
+			limit = 1;
+		}
+		List<Exercise> exercises = exerciseService.findAllExercises(page * limit, limit);
 
 		exercises.forEach(exercise -> exercise.getLinks().put(
 			"self",
 			Link.builder().href(uri(info, ExerciseResource.class, "getExercise", exercise.getId())).build()
 		));
+
+		int size = exerciseService.countExercises();
 
 		EmbeddedResource.EmbeddedResourceBuilder<List<Exercise>> builder = EmbeddedResource.<List<Exercise>>builder()
 			.embedded("exercises", exercises);
@@ -50,6 +55,26 @@ public class ExerciseResource {
 		builder.link(
 			"self",
 			Link.builder().href(uri(info, ExerciseResource.class, "getAllExercises")).build());
+
+		builder.link(
+			"first",
+			Link.builder().href(pagedUri(info, ExerciseResource.class, "getAllExercises", 0, limit)).build());
+
+		builder.link(
+			"last",
+			Link.builder().href(pagedUri(info, ExerciseResource.class, "getAllExercises", size / limit - 1, limit)).build());
+
+		if (page < size / limit - 1) {
+			builder.link(
+				"next",
+				Link.builder().href(pagedUri(info, ExerciseResource.class, "getAllExercises", page + 1, limit)).build());
+		}
+
+		if (page > 0) {
+			builder.link(
+				"previous",
+				Link.builder().href(pagedUri(info, ExerciseResource.class, "getAllExercises", page - 1, limit)).build());
+		}
 
 		EmbeddedResource<List<Exercise>> embedded = builder.build();
 		return Response.ok(embedded).build();

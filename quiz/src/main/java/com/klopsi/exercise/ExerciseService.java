@@ -28,10 +28,24 @@ public class ExerciseService {
 	public void init(){
 		exercises.add(new Exercise(1, "Chrzest Polski", "Kiedy odbył się chrzest Polski?", Difficulty.EASY, 10, List.of()));
 		exercises.add(new Exercise(2, "Polski Maluch", "Kiedy rozpoczęła się produkcja Malucha?", Difficulty.MEDIUM, 25, List.of()));
+		exercises.add(new Exercise(3, "Kosmos", "W którym roku Neil Armstrong stanął na Księżycu?", Difficulty.EASY, 10, List.of()));
+		exercises.add(new Exercise(4, "Ewolucja", "Podaj nazwisko osoby, która wymyśliła teorię ewolucji", Difficulty.MEDIUM, 15, List.of()));
+		exercises.add(new Exercise(5, "Podbój kosmosu", "Kto jako pierwszy poleciał w kosmos?", Difficulty.HARD, 25, List.of()));
+		exercises.add(new Exercise(6, "Ziemia", "Czy Ziemia jest największą planetą układu słonecznego?", Difficulty.EASY, 5, List.of()));
+		exercises.add(new Exercise(7, "Dinozaury", "Podaj nazwę najstraszniejszego dinozaura", Difficulty.MEDIUM, 25, List.of()));
+		exercises.add(new Exercise(8, "Ananasy", "Czy ananasy rosną na drzewach?", Difficulty.MEDIUM, 25, List.of()));
 	}
 
 	public synchronized List<Exercise> findAllExercises() {
 		return exercises.stream().map(Exercise::new).collect(Collectors.toList());
+	}
+
+	public synchronized List<Exercise> findAllExercises(int offset, int limit) {
+		return exercises.stream().skip(offset).limit(limit).map(Exercise::new).collect(Collectors.toList());
+	}
+
+	public synchronized int countExercises() {
+		return exercises.size();
 	}
 
 	public synchronized Exercise findExercise(int id) {

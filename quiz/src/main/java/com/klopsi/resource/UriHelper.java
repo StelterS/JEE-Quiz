@@ -53,11 +53,12 @@ public class UriHelper {
 	 * @param params values used to fill method path params
 	 * @return parametrized URI to the method in the JAX-RS resource
 	 */
-	public static URI pagedUri(UriInfo info, Class<?> clazz, String method, int page, Object... params) {
+	public static URI pagedUri(UriInfo info, Class<?> clazz, String method, int page, int limit, Object... params) {
 		return info.getBaseUriBuilder()
 			.path(clazz)
 			.path(clazz, method)
 			.queryParam("page", page)
+			.queryParam("limit", limit)
 			.build(params);
 	}
 }
