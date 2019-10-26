@@ -14,6 +14,7 @@ import java.util.List;
 
 import static com.klopsi.resource.UriHelper.pagedUri;
 import static com.klopsi.resource.UriHelper.uri;
+import static java.lang.Math.max;
 
 @Path("/exercises")
 public class ExerciseResource {
@@ -104,6 +105,10 @@ public class ExerciseResource {
 			exercise.getLinks().put(
 				"exercises",
 				Link.builder().href(uri(info, ExerciseResource.class, "getAllExercises")).build());
+
+			exercise.getLinks().put(
+				"deleteExercise",
+				Link.builder().method(HttpMethod.DELETE).href(uri(info, ExerciseResource.class, "deleteExercise", exercise.getId())).build());
 
 			return Response.ok(exercise).build();
 		}

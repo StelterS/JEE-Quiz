@@ -79,6 +79,11 @@ public class UserResource {
 			user.getLinks().put(
 				"users",
 				Link.builder().href(uri(info, UserResource.class, "getAllUsers")).build());
+
+			user.getLinks().put(
+				"deleteUser",
+				Link.builder().method(HttpMethod.DELETE).href(uri(info, UserResource.class, "deleteUser", user.getId())).build());
+
 			return Response.ok(user).build();
 		}
 		else {

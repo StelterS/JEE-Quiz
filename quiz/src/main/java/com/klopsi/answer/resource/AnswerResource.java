@@ -73,6 +73,11 @@ public class AnswerResource {
 			answer.getLinks().put(
 				"answers",
 				Link.builder().href(uri(info, AnswerResource.class, "getAllAnswers")).build());
+
+			answer.getLinks().put(
+				"deleteAnswer",
+				Link.builder().method(HttpMethod.DELETE).href(uri(info, AnswerResource.class, "deleteAnswer", answer.getId())).build());
+
 			return Response.ok(answer).build();
 		} else {
 			return Response.status(Response.Status.NOT_FOUND).build();
