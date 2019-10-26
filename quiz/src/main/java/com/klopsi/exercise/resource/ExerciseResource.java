@@ -62,7 +62,7 @@ public class ExerciseResource {
 
 		builder.link(
 			"last",
-			Link.builder().href(pagedUri(info, ExerciseResource.class, "getAllExercises", size / limit - 1, limit)).build());
+			Link.builder().href(pagedUri(info, ExerciseResource.class, "getAllExercises", max(size / limit - 1, 0), limit)).build());
 
 		if (page < size / limit - 1) {
 			builder.link(
