@@ -5,6 +5,10 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="/WEB-INF/templates/main.xhtml">
 
+    <f:metadata>
+        <f:viewParam name="difficulty" value="#{exerciseList.difficulty}" required="false"/>
+    </f:metadata>
+
     <ui:define name="content">
         <h:dataTable value="#{exerciseList.exercises}" var="exercise"
             rowClasses="table-row">

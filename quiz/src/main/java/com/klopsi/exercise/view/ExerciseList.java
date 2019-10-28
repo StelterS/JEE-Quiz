@@ -1,7 +1,11 @@
 package com.klopsi.exercise.view;
 
 import com.klopsi.exercise.ExerciseService;
+import com.klopsi.exercise.model.Difficulty;
 import com.klopsi.exercise.model.Exercise;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -13,6 +17,10 @@ public class ExerciseList {
 	private ExerciseService service;
 	private List<Exercise> exercises;
 
+	@Getter
+	@Setter
+	private Difficulty difficulty;
+
 	@Inject
 	public ExerciseList(ExerciseService service){
 		this.service = service;
@@ -20,7 +28,12 @@ public class ExerciseList {
 
 	public List<Exercise> getExercises() {
 		if(exercises == null){
-			exercises = service.findAllExercises();
+			if (difficulty == null) {
+				exercises = service.findAllExercises();
+			}
+			else {
+				exercises = service.findExerciseByDifficulty(List.of(difficulty));
+			}
 		}
 		return exercises;
 	}

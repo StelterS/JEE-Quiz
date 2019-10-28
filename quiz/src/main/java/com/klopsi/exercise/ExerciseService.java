@@ -56,6 +56,12 @@ public class ExerciseService {
 		return em.find(Exercise.class, id);
 	}
 
+	public List<Exercise> findExerciseByDifficulty(List<Difficulty> difficulties) {
+		return em.createNamedQuery(Exercise.Queries.FIND_BY_DIFFICULTY, Exercise.class)
+			.setParameter("difficulties", difficulties)
+			.getResultList();
+	}
+
 	@Transactional
 	public void removeExercise(Exercise exercise) {
 		em.remove(em.merge(exercise));
