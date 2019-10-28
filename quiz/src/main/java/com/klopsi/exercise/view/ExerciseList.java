@@ -30,4 +30,9 @@ public class ExerciseList {
 		service.removeExercise(exercise);
 		return "exercise_list?faces-redirect=true";
 	}
+
+	public String init() {
+		service.init();
+		return "exercise_list?faces-redirect=true";
+	}
 }

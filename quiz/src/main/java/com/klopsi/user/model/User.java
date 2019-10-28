@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -15,46 +16,57 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Getter
-@Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(exclude = {"links", "answers"})
+@ToString(exclude = {"links", "answers"})
+@Entity
+@Table(name = "users")
+@NamedQuery(name = User.Queries.FIND_ALL, query = "select u from User u")
 public class User implements Serializable {
-	private int id;
 
+	public static class Queries {
+		public static final String FIND_ALL = "User.findAll";
+	}
+
+	@Id
+	@GeneratedValue
+	@Getter
+	private Integer id;
+
+	@Getter
+	@Setter
 	@NotBlank
 	private String firstName;
 
+	@Getter
+	@Setter
 	@NotBlank
 	private String lastName;
 
+	@Getter
+	@Setter
+	@Column(name = "birth_date")
 	private LocalDate birthDate;
 
 	@JsonbTransient
 	@NotNull
+	@Getter
+	@Setter
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE)	// answers are deleted with user
 	private List<Answer> answers = new ArrayList<>();
-
-	public User(User user) {
-		this.id = user.id;
-		this.firstName = user.firstName;
-		this.lastName = user.lastName;
-		this.birthDate = user.birthDate;
-		this.answers = user.answers;
-	}
-
-	public User(int id, String firstName, String lastName, LocalDate birthDate, List<Answer> answers) {
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.birthDate = birthDate;
-		this.answers = answers;
-	}
 
 	/**
 	 * HATEOAS links.
 	 */
 	@JsonbProperty("_links")
+	@Transient
+	@Getter
+	@Setter
 	private Map<String, Link> links = new HashMap<>();
+
+	public User(String firstName, String lastName, LocalDate birthDate) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.birthDate = birthDate;
+	}
 }

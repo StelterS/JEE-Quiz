@@ -30,7 +30,7 @@ public class AnswerConverter implements Converter<Answer> {
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Answer value) {
-		if (value == null) {
+		if (value.getId() == null) {
 			return "";
 		}
 		return Integer.toString(value.getId());

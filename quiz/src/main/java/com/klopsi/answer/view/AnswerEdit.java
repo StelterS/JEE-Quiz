@@ -22,7 +22,7 @@ public class AnswerEdit implements Serializable {
 		if(answer == null) {
 			answer = new Answer();
 		}
-		setLastAnswer(new Answer(answer));
+		//setLastAnswer(new Answer(answer));
 		return answer;
 	}
 
@@ -36,9 +36,9 @@ public class AnswerEdit implements Serializable {
 	}
 
 	public String saveAnswer() {
-		if (lastAnswer.getId() != 0){
-			service.deleteAnswerFromExerciseList(lastAnswer);
-		}
+		//if (lastAnswer.getId() != 0){
+			//service.deleteAnswerFromExerciseList(lastAnswer);
+		//}
 		service.saveAnswer(answer);
 		return "answer_list?faces-redirect=true";
 	}

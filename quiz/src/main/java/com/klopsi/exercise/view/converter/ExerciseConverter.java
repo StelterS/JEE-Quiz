@@ -30,7 +30,7 @@ public class ExerciseConverter implements Converter<Exercise> {
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Exercise value) {
-		if (value == null) {
+		if (value.getId() == null) {
 			return "";
 		}
 		return Integer.toString(value.getId());

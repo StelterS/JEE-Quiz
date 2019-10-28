@@ -146,8 +146,8 @@ public class AnswerResource {
 		} else if (originalAnswer.getId() != answer.getId()) {
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		} else {
-			answerService.deleteAnswerFromExerciseList(originalAnswer);
-			answerService.deleteAnswerFromUserList(originalAnswer);
+			//answerService.deleteAnswerFromExerciseList(originalAnswer);
+			//answerService.deleteAnswerFromUserList(originalAnswer);
 			answerService.saveAnswer(answer);
 			return Response.ok().build();
 		}

@@ -44,7 +44,7 @@ public class ExerciseResource {
 			Link.builder().href(uri(info, ExerciseResource.class, "getExercise", exercise.getId())).build()
 		));
 
-		int size = exerciseService.countExercises();
+		long size = exerciseService.countExercises();
 
 		EmbeddedResource.EmbeddedResourceBuilder<List<Exercise>> builder = EmbeddedResource.<List<Exercise>>builder()
 			.embedded("exercises", exercises);
@@ -61,9 +61,9 @@ public class ExerciseResource {
 			"first",
 			Link.builder().href(pagedUri(info, ExerciseResource.class, "getAllExercises", 0, limit)).build());
 
-		builder.link(
-			"last",
-			Link.builder().href(pagedUri(info, ExerciseResource.class, "getAllExercises", max(size / limit - 1, 0), limit)).build());
+		//builder.link(
+		//	"last",
+		//	Link.builder().href(pagedUri(info, ExerciseResource.class, "getAllExercises", max(size / limit - 1, 0), limit)).build());
 
 		if (page < size / limit - 1) {
 			builder.link(

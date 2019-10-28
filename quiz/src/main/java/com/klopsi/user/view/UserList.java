@@ -30,4 +30,9 @@ public class UserList {
         service.removeUser(user);
         return "user_list?faces-redirect=true";
     }
+
+    public String init() {
+        service.init();
+        return "user_list?faces-redirect=true";
+    }
 }

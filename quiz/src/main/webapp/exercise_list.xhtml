@@ -56,6 +56,10 @@
 
         </h:dataTable>
         <h:button value="Create" outcome="exercise_create_edit.xhtml"/>
+
+        <h:form>
+            <h:commandButton action="#{exerciseList.init}" value="Init"/>
+        </h:form>
     </ui:define>
 
 </ui:composition>

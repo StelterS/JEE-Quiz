@@ -7,37 +7,54 @@ import lombok.*;
 
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.lang.annotation.Target;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-@Getter
-@Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(exclude = {"exercise", "user", "links"})
+@ToString(exclude = {"exercise", "user", "links"})
+@Entity
+@Table(name = "answers")
+@NamedQuery(name = Answer.Queries.FIND_ALL, query = "select a from Answer a")
 public class Answer implements Serializable {
 
-	private int id;
+	public static class Queries {
+		public static final String FIND_ALL = "Answer.findAll";
+	}
 
+	@Id
+	@GeneratedValue
+	@Getter
+	private Integer id;
+
+	@Getter
+	@Setter
 	@NotBlank
 	private String content;
 
+	@Getter
+	@Setter
 	@Min(0)
 	@Max(100)
 	@NotNull
 	private Integer percent;
 
+	@Getter
+	@Setter
+	@Column(name = "submission_date")
 	private LocalDate submissionDate;
 
+	@Setter
+	@ManyToOne
 	@NotNull
+	@JoinColumn(name = "exercise")
 	private Exercise exercise;
 
 	@JsonbTransient
@@ -45,6 +62,9 @@ public class Answer implements Serializable {
 		return this.exercise;
 	}
 
+	@Setter
+	@ManyToOne
+	@JoinColumn(name = "user")
 	@NotNull
 	private User user;
 
@@ -53,27 +73,19 @@ public class Answer implements Serializable {
 		return this.user;
 	}
 
-	public Answer(Answer answer){
-		this.id = answer.id;
-		this.content = answer.content;
-		this.exercise = answer.exercise;
-		this.percent = answer.percent;
-		this.submissionDate = answer.submissionDate;
-		this.user = answer.user;
-	}
-
-	public Answer(int id, String content, Integer percent, LocalDate submissionDate, Exercise exercise, User user){
-		this.id = id;
-		this.content = content;
-		this.exercise = exercise;
-		this.percent = percent;
-		this.submissionDate = submissionDate;
-		this.user = user;
-	}
-
 	/**
 	 * HATEOAS links.
 	 */
 	@JsonbProperty("_links")
+	@Transient
+	@Getter
+	@Setter
 	private Map<String, Link> links = new HashMap<>();
+
+
+	public Answer(String content, Integer percent, LocalDate submissionDate){
+		this.content = content;
+		this.percent = percent;
+		this.submissionDate = submissionDate;
+	}
 }
