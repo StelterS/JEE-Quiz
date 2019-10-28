@@ -8,6 +8,7 @@ import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -34,17 +35,19 @@ public class User implements Serializable {
 
 	@Getter
 	@Setter
-	@NotBlank
+	@NotBlank(message = "First name is required")
 	private String firstName;
 
 	@Getter
 	@Setter
-	@NotBlank
+	@NotBlank(message = "Last name is required")
 	private String lastName;
 
 	@Getter
 	@Setter
 	@Column(name = "birth_date")
+	@PastOrPresent(message = "Birthday date cannot be set in the future")
+	@NotNull(message = "Birthday date must be provided")
 	private LocalDate birthDate;
 
 	@JsonbTransient

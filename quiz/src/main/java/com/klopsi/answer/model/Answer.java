@@ -7,10 +7,7 @@ import lombok.*;
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -35,24 +32,26 @@ public class Answer implements Serializable {
 
 	@Getter
 	@Setter
-	@NotBlank
+	@NotBlank(message = "Answer must be specified")
 	private String content;
 
 	@Getter
 	@Setter
 	@Min(0)
 	@Max(100)
-	@NotNull
+	@NotNull(message = "Score must be specified")
 	private Integer percent;
 
 	@Getter
 	@Setter
 	@Column(name = "submission_date")
+	@PastOrPresent(message = "Submission date cannot be set in the future")
+	@NotNull(message = "Submission date must be provided")
 	private LocalDate submissionDate;
 
 	@Setter
 	@ManyToOne
-	@NotNull
+	@NotNull(message = "Chose exercise that you want to answer")
 	@JoinColumn(name = "exercise")
 	private Exercise exercise;
 
@@ -64,7 +63,7 @@ public class Answer implements Serializable {
 	@Setter
 	@ManyToOne
 	@JoinColumn(name = "user")
-	@NotNull
+	@NotNull(message = "Identify yourself")
 	private User user;
 
 	@JsonbTransient

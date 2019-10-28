@@ -6,6 +6,7 @@ import lombok.*;
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -35,12 +36,12 @@ public class Exercise implements Serializable {
 
 	@Getter
 	@Setter
-	@NotBlank
+	@NotBlank(message = "Title must be specified")
 	private String title;
 
 	@Getter
 	@Setter
-	@NotBlank
+	@NotBlank(message = "Question to be answered must be specified")
 	private String content;
 
 	@Getter
@@ -51,8 +52,8 @@ public class Exercise implements Serializable {
 
 	@Getter
 	@Setter
-	@Min(0)
-	@NotNull
+	@Min(value = 0, message = "Value cannot be negative")
+	@NotNull(message = "Maximum amount of points to get must be specified")
 	private Integer maxPoints;
 
 	@JsonbTransient
