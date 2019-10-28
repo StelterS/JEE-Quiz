@@ -34,6 +34,11 @@
             </h:column>
 
             <h:column>
+                <f:facet name="header">User</f:facet>
+                <h:outputText value="#{answer.user.firstName.concat(' '.concat(answer.user.lastName))}"/>
+            </h:column>
+
+            <h:column>
                 <h:form>
                     <h:commandButton value="Delete" action="#{answerList.removeAnswer(answer)}"/>
                 </h:form>

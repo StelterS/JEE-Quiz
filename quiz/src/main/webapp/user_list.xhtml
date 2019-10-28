@@ -32,7 +32,7 @@
                 <f:facet name="header">Anwsers</f:facet>
                 <h:dataTable value="#{user.answers}" var="answer">
                     <h:column>
-                        <h:outputText value="#{answer.content}"/>
+                        <h:outputText value="#{answer.exercise.title.concat(': '.concat(answer.content))}"/>
                     </h:column>
                 </h:dataTable>
             </h:column>

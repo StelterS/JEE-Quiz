@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/WEB-INF/templates/main.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="user" value="#{userEdit.user}" required="false"/>
+    </f:metadata>
+
+    <ui:define name="content">
+        <h:form>
+            <h:panelGrid columns="3">
+                <h:outputLabel value="First Name:" for="firstName"/>
+                <h:inputText id="firstName" value="#{userEdit.user.firstName}"/>
+                <h:message for="firstName"/>
+
+                <h:outputLabel value="Last Name:" for="lastName"/>
+                <h:inputText id="lastName" value="#{userEdit.user.lastName}"/>
+                <h:message for="lastName"/>
+
+                <h:outputLabel value="Birth date:" for="birthDate"/>
+                <h:inputText id="birthDate" value="#{userEdit.user.birthDate}">
+                    <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
+                </h:inputText>
+                <h:message for="birthDate"/>
+
+                <h:commandButton value="Save" action="#{userEdit.saveUser}"/>
+                <h:messages/>
+            </h:panelGrid>
+        </h:form>
+
+        <h:button value="Back" outcome="user_list.xhtml"/>
+    </ui:define>
+
+</ui:composition>
