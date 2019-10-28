@@ -4,7 +4,6 @@ import com.klopsi.exercise.ExerciseService;
 import com.klopsi.exercise.model.Difficulty;
 import com.klopsi.exercise.model.Exercise;
 import lombok.Setter;
-
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;

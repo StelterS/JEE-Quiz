@@ -2,7 +2,6 @@ package com.klopsi.exercise.view;
 
 import com.klopsi.exercise.ExerciseService;
 import com.klopsi.exercise.model.Exercise;
-
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;

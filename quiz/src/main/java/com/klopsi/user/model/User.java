@@ -3,7 +3,6 @@ package com.klopsi.user.model;
 import com.klopsi.answer.model.Answer;
 import com.klopsi.resource.model.Link;
 import lombok.*;
-
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
