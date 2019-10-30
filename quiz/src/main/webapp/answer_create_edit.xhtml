@@ -26,14 +26,19 @@
                 <h:message for="date"/>
 
                 <h:outputLabel value="Exercise:" for="exercise"/>
-                <h:selectOneMenu id="exercise" collectionType="java.util.ArrayList" value="#{answerEdit.answer.exercise}">
-                    <f:selectItems value="#{exerciseEdit.availableExercises}" var="exercise" itemValue="#{exercise}" itemLabel="#{exercise.title}"/>
+                <h:selectOneMenu id="exercise" collectionType="java.util.ArrayList"
+                                 value="#{answerEdit.answer.exercise}">
+                    <f:selectItem itemValue="#{null}" itemLabel="-"/>
+                    <f:selectItems value="#{exerciseEdit.availableExercises}" var="exercise" itemValue="#{exercise}"
+                                   itemLabel="#{exercise.title}"/>
                 </h:selectOneMenu>
                 <h:message for="exercise"/>
 
                 <h:outputLabel value="User:" for="user"/>
                 <h:selectOneMenu id="user" collectionType="java.util.ArrayList" value="#{answerEdit.answer.user}">
-                    <f:selectItems value="#{userEdit.availableUsers}" var="user" itemValue="#{user}" itemLabel="#{user.firstName.concat(' '.concat(user.lastName))}"/>
+                    <f:selectItem itemValue="#{null}" itemLabel="-"/>
+                    <f:selectItems value="#{userEdit.availableUsers}" var="user" itemValue="#{user}"
+                                   itemLabel="#{user.firstName} #{user.lastName}"/>
                 </h:selectOneMenu>
                 <h:message for="user"/>
 
