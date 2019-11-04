@@ -47,4 +47,13 @@ public class ExerciseList {
 		service.init();
 		return "exercise_list?faces-redirect=true";
 	}
+
+	public String filter() {
+		if (difficulty != null) {
+			return "exercise_list?faces-redirect=true" + "difficulty=" + difficulty;
+		}
+		else {
+			return "exercise_list?faces-redirect=true";
+		}
+	}
 }

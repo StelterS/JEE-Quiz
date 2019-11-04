@@ -64,6 +64,17 @@
         <h:form>
             <h:commandButton action="#{exerciseList.init}" value="Init"/>
         </h:form>
+
+        <h:form>
+            <h:outputLabel value="Difficulty:" for="difficulty"/>
+            <h:selectOneMenu id="difficulty" value="#{exerciseList.difficulty}">
+                <f:selectItem itemValue="#{null}" itemLabel="-"/>
+                <f:selectItems value="#{exerciseEdit.availableDifficulties}" var="difficulty" itemValue="#{difficulty}" itemLabel="#{difficulty}"/>
+            </h:selectOneMenu>
+            <h:message for="difficulty"/>
+            <h:commandButton action="#{exerciseList.filter}" value="Filter"/>
+        </h:form>
+
     </ui:define>
 
 </ui:composition>
