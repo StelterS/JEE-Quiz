@@ -46,6 +46,6 @@ public class ExerciseEdit implements Serializable {
 
 	public String saveExercise(){
 		service.saveExercise(exercise);
-		return "/quiz-views/exercise_list?faces-redirect=true";
+		return "exercise_list?faces-redirect=true";
 	}
 }

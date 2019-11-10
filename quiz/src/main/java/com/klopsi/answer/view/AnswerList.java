@@ -27,6 +27,6 @@ public class AnswerList {
 
 	public String removeAnswer(Answer answer) {
 		service.removeAnswer(answer);
-		return "/quiz-views/answer_list?faces-redirect=true";
+		return "answer_list?faces-redirect=true";
 	}
 }

@@ -4,6 +4,8 @@ import com.klopsi.exercise.model.Difficulty;
 import com.klopsi.exercise.model.Exercise;
 import lombok.NoArgsConstructor;
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.context.ExternalContext;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -15,6 +17,9 @@ public class ExerciseService {
 
 	@PersistenceContext
 	private EntityManager em;
+
+	@Inject
+	private ExternalContext context;
 
 	public List<Exercise> findAllExercises() {
 		return em.createNamedQuery(Exercise.Queries.FIND_ALL, Exercise.class).getResultList();
@@ -43,7 +48,9 @@ public class ExerciseService {
 
 	@Transactional
 	public void removeExercise(Exercise exercise) {
-		em.remove(em.merge(exercise));
+		if(context.isUserInRole("ADMIN")){
+			em.remove(em.merge(exercise));
+		}
 	}
 
 	@Transactional

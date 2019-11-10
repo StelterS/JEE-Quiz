@@ -35,6 +35,6 @@ public class AnswerEdit implements Serializable {
 
 	public String saveAnswer() {
 		service.saveAnswer(answer);
-		return "/quiz-views/answer_list?faces-redirect=true";
+		return "answer_list?faces-redirect=true";
 	}
 }

@@ -28,6 +28,6 @@ public class UserList {
 
     public String removeUser(User user) {
         service.removeUser(user);
-        return "/quiz-views/user_list?faces-redirect=true";
+        return "user_list?faces-redirect=true";
     }
 }
