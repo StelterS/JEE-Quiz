@@ -16,6 +16,9 @@
         <h:body>
             <header>
                 <h1>Quiz</h1>
+                <h:form>
+                    <h:commandLink action="#{userContext.logout}" rendered="#{request.userPrincipal ne null}">logout #{request.userPrincipal.name}</h:commandLink>
+                </h:form>
             </header>
             <nav class="navbar">
                 <ul>
