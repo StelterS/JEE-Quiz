@@ -28,11 +28,6 @@ public class UserList {
 
     public String removeUser(User user) {
         service.removeUser(user);
-        return "user_list?faces-redirect=true";
-    }
-
-    public String init() {
-        service.init();
-        return "user_list?faces-redirect=true";
+        return "/quiz-views/user_list?faces-redirect=true";
     }
 }

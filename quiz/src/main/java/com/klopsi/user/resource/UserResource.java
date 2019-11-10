@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.util.List;
+import java.util.Set;
 
 import static com.klopsi.resource.UriHelper.uri;
 
@@ -97,7 +98,7 @@ public class UserResource {
 	public Response getUserAnswers(@PathParam("userId") int userId) {
 		User user = userService.findUser(userId);
 		if (user != null) {
-			EmbeddedResource<List<Answer>> embedded = EmbeddedResource.<List<Answer>>builder()
+			EmbeddedResource<Set<Answer>> embedded = EmbeddedResource.<Set<Answer>>builder()
 				.embedded("authors", user.getAnswers())
 				.link(
 					"user",

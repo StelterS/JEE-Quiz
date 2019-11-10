@@ -62,10 +62,6 @@
         <h:button value="Create" outcome="exercise_create_edit.xhtml"/>
 
         <h:form>
-            <h:commandButton action="#{exerciseList.init}" value="Init"/>
-        </h:form>
-
-        <h:form>
             <h:outputLabel value="Difficulty:" for="difficulty"/>
             <h:selectOneMenu id="difficulty" value="#{exerciseList.difficulty}">
                 <f:selectItem itemValue="#{null}" itemLabel="-"/>

@@ -16,21 +16,6 @@ public class UserService {
 	@PersistenceContext
 	private EntityManager em;
 
-	@Transactional
-	public void init() {
-		User user1 = new User("Albert", "Einstein", LocalDate.of(1879, Month.MARCH, 14));
-		User user2 = new User("Maria", "Skłodowska-Curie", LocalDate.of(1867, Month.NOVEMBER, 7));
-		User user3 = new User("Isaac", "Newton", LocalDate.of(1643, Month.JANUARY, 4));
-		User user4 = new User("Stephen", "Hawking", LocalDate.of(1942, Month.JANUARY, 8));
-		User user5 = new User("Alan", "Turing", LocalDate.of(1912, Month.JUNE, 23));
-
-		em.persist(user1);
-		em.persist(user2);
-		em.persist(user3);
-		em.persist(user4);
-		em.persist(user5);
-	}
-
 	public List<User> findAllUsers() {
 		return em.createNamedQuery(User.Queries.FIND_ALL, User.class).getResultList();
 	}

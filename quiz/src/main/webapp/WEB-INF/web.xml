@@ -33,8 +33,8 @@
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>books</web-resource-name>
-            <url-pattern>/book/*</url-pattern>
+            <web-resource-name>quiz_views</web-resource-name>
+            <url-pattern>/quiz_views/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>USER</role-name>

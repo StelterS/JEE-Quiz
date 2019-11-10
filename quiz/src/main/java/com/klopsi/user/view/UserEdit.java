@@ -42,6 +42,6 @@ public class UserEdit implements Serializable {
 
     public String saveUser(){
         service.saveUser(user);
-        return "user_list?faces-redirect=true";
+        return "/quiz-views/user_list?faces-redirect=true";
     }
 }

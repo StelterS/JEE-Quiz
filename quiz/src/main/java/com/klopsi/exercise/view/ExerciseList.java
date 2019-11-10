@@ -40,20 +40,15 @@ public class ExerciseList {
 
 	public String removeExercise(Exercise exercise) {
 		service.removeExercise(exercise);
-		return "exercise_list?faces-redirect=true";
-	}
-
-	public String init() {
-		service.init();
-		return "exercise_list?faces-redirect=true";
+		return "/quiz-views/exercise_list?faces-redirect=true";
 	}
 
 	public String filter() {
 		if (difficulty != null) {
-			return "exercise_list?faces-redirect=true" + "difficulty=" + difficulty;
+			return "/quiz-views/exercise_list?faces-redirect=true" + "difficulty=" + difficulty;
 		}
 		else {
-			return "exercise_list?faces-redirect=true";
+			return "/quiz-views/exercise_list?faces-redirect=true";
 		}
 	}
 }

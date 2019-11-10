@@ -32,6 +32,7 @@ public class Exercise implements Serializable {
 	@Id
 	@GeneratedValue
 	@Getter
+	@Setter//for JSONB deserialization
 	private Integer id;
 
 	@Getter
