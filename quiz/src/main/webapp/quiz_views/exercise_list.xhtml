@@ -46,6 +46,15 @@
                 </h:dataTable>
             </h:column>
 
+            <h:column rendered="#{request.isUserInRole('USER')}">
+                <f:facet name="header">Anwsers</f:facet>
+                <h:dataTable value="#{exercise.answers}" var="answer">
+                    <h:column>
+                        <h:outputText value="#{answer.user.firstName} #{answer.user.lastName}"/>
+                    </h:column>
+                </h:dataTable>
+            </h:column>
+
             <h:column rendered="#{request.isUserInRole('MODERATOR') || request.isUserInRole('ADMIN')}">
                 <h:form>
                     <h:commandButton value="Delete" action="#{exerciseList.removeExercise(exercise)}"/>
