@@ -19,10 +19,12 @@ import java.util.Map;
 @Entity
 @Table(name = "answers")
 @NamedQuery(name = Answer.Queries.FIND_ALL, query = "select a from Answer a")
+@NamedQuery(name = Answer.Queries.FIND_BY_USER, query = "select a from Answer a where a.user.login = :login")
 public class Answer implements Serializable {
 
 	public static class Queries {
 		public static final String FIND_ALL = "Answer.findAll";
+		public static final String FIND_BY_USER = "Answer.findAllByUser";
 	}
 
 	@Id
