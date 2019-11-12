@@ -37,7 +37,7 @@
                 <h:outputText value="#{exercise.maxPoints}"/>
             </h:column>
 
-            <h:column>
+            <h:column rendered="#{request.isUserInRole('MODERATOR') || request.isUserInRole('ADMIN')}">
                 <f:facet name="header">Anwsers</f:facet>
                 <h:dataTable value="#{exercise.answers}" var="answer">
                     <h:column>
