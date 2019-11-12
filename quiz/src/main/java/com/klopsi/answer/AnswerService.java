@@ -23,7 +23,7 @@ public class AnswerService {
 	private HttpServletRequest securityContext;
 
 	public List<Answer> findAllAnswers() {
-		if(securityContext.isUserInRole("ADMIN")){
+		if(securityContext.isUserInRole("ADMIN") || securityContext.isUserInRole("MODERATOR")){
 			return em.createNamedQuery(Answer.Queries.FIND_ALL, Answer.class).getResultList();
 		}
 		else if(securityContext.isUserInRole("USER")) {
@@ -48,7 +48,7 @@ public class AnswerService {
 
 	@Transactional
 	public void removeAnswer(Answer answer) {
-		if(securityContext.isUserInRole("ADMIN")){
+		if(securityContext.isUserInRole("ADMIN") || securityContext.isUserInRole("MODERATOR")){
 			em.remove(em.merge(answer));
 		}
 		else if(securityContext.isUserInRole("USER")
@@ -68,7 +68,8 @@ public class AnswerService {
 				em.persist(answer);
 			} else {
 				em.merge(answer);
-			}		}
+			}
+		}
 		else {
 			throw new AccessControlException("Access denied");
 		}

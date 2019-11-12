@@ -58,7 +58,8 @@ public class UserService {
 			}
 			else {
 				em.merge(user);
-			}		}
+			}
+		}
 		else {
 			throw new AccessControlException("Access denied");
 		}

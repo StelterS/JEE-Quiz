@@ -46,21 +46,20 @@
                 </h:dataTable>
             </h:column>
 
-            <h:column>
+            <h:column rendered="#{request.isUserInRole('MODERATOR') || request.isUserInRole('ADMIN')}">
                 <h:form>
-                    <h:commandButton rendered="#{request.isUserInRole('ADMIN')}"
-                                     value="Delete" action="#{exerciseList.removeExercise(exercise)}"/>
+                    <h:commandButton value="Delete" action="#{exerciseList.removeExercise(exercise)}"/>
                 </h:form>
             </h:column>
 
-            <h:column>
+            <h:column rendered="#{request.isUserInRole('MODERATOR') || request.isUserInRole('ADMIN')}">
                 <h:button value="Edit" outcome="exercise_create_edit.xhtml">
                     <f:param name="exercise" value="#{exercise.id}"/>
                 </h:button>
             </h:column>
 
         </h:dataTable>
-        <h:button rendered="#{request.isUserInRole('ADMIN')}" value="Create" outcome="exercise_create_edit.xhtml"/>
+        <h:button rendered="#{request.isUserInRole('MODERATOR') || request.isUserInRole('ADMIN')}" value="Create" outcome="exercise_create_edit.xhtml"/>
 
         <h:form>
             <h:outputLabel value="Difficulty:" for="difficulty"/>

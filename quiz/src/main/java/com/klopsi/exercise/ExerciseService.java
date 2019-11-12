@@ -74,7 +74,7 @@ public class ExerciseService {
 
 	@Transactional
 	public void removeExercise(Exercise exercise) {
-		if(securityContext.isUserInRole("ADMIN")){
+		if(securityContext.isUserInRole("ADMIN") || securityContext.isUserInRole("MODERATOR")){
 			em.remove(em.merge(exercise));
 		}
 		else {
@@ -84,12 +84,13 @@ public class ExerciseService {
 
 	@Transactional
 	public synchronized void saveExercise(Exercise exercise){
-		if(securityContext.isUserInRole("USER")){
+		if(securityContext.isUserInRole("ADMIN") || securityContext.isUserInRole("MODERATOR")){
 			if (exercise.getId() == null) {
 				em.persist(exercise);
 			} else {
 				em.merge(exercise);
-			}		}
+			}
+		}
 		else {
 			throw new AccessControlException("Access denied");
 		}
