@@ -23,7 +23,7 @@ public class UserService {
 	private HttpServletRequest securityContext;
 
 	public List<User> findAllUsers() {
-		if(securityContext.isUserInRole("ADMIN")){
+		if(securityContext.isUserInRole("USER")){
 			return em.createNamedQuery(User.Queries.FIND_ALL, User.class).getResultList();
 		}
 		else {
@@ -32,7 +32,7 @@ public class UserService {
 	}
 
 	public User findUser(int id) {
-		if(securityContext.isUserInRole("ADMIN")){
+		if(securityContext.isUserInRole("USER")){
 			return em.find(User.class, id);
 		}
 		else {
@@ -52,7 +52,7 @@ public class UserService {
 
 	@Transactional
 	public void saveUser(User user){
-		if(securityContext.isUserInRole("ADMIN")){
+		if(securityContext.isUserInRole("USER")){
 			if(user.getId() == null) {
 				em.persist(user);
 			}
