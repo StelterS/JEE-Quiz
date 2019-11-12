@@ -3,9 +3,12 @@ package com.klopsi.user;
 import com.klopsi.user.model.User;
 import lombok.NoArgsConstructor;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.security.AccessControlException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
@@ -16,26 +19,48 @@ public class UserService {
 	@PersistenceContext
 	private EntityManager em;
 
+	@Inject
+	private HttpServletRequest securityContext;
+
 	public List<User> findAllUsers() {
-		return em.createNamedQuery(User.Queries.FIND_ALL, User.class).getResultList();
+		if(securityContext.isUserInRole("ADMIN")){
+			return em.createNamedQuery(User.Queries.FIND_ALL, User.class).getResultList();
+		}
+		else {
+			throw new AccessControlException("Access denied");
+		}
 	}
 
 	public User findUser(int id) {
-		return em.find(User.class, id);
+		if(securityContext.isUserInRole("ADMIN")){
+			return em.find(User.class, id);
+		}
+		else {
+			throw new AccessControlException("Access denied");
+		}
 	}
 
 	@Transactional
 	public void removeUser(User user) {
-		em.remove(em.merge(user));
+		if(securityContext.isUserInRole("ADMIN")){
+			em.remove(em.merge(user));
+		}
+		else {
+			throw new AccessControlException("Access denied");
+		}
 	}
 
 	@Transactional
 	public void saveUser(User user){
-		if(user.getId() == null) {
-			em.persist(user);
-		}
+		if(securityContext.isUserInRole("ADMIN")){
+			if(user.getId() == null) {
+				em.persist(user);
+			}
+			else {
+				em.merge(user);
+			}		}
 		else {
-			em.merge(user);
+			throw new AccessControlException("Access denied");
 		}
 	}
 }
