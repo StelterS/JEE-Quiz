@@ -4,6 +4,8 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 
 /**
@@ -14,10 +16,10 @@ import java.io.Serializable;
 public class UserContext implements Serializable {
 
     @Inject
-    private ExternalContext context;
+    private HttpServletRequest context;
 
-    public String logout() {
-        context.invalidateSession();
+    public String logout() throws ServletException {
+        context.logout();
         return "/index?faces-redirect=true";
     }
 

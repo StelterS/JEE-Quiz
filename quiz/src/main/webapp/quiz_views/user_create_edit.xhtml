@@ -26,6 +26,12 @@
                 </h:inputText>
                 <h:message for="birthDate"/>
 
+                <h:selectOneRadio value="#{userEdit.newUserRole}" rendered="#{request.isUserInRole('ADMIN')}">
+                    <f:selectItem itemValue="USER" itemLabel="User" />
+                    <f:selectItem itemValue="MODERATOR" itemLabel="Moderator" />
+                    <f:selectItem itemValue="ADMIN" itemLabel="Admin" />
+                </h:selectOneRadio>
+
                 <h:commandButton value="Save" action="#{userEdit.saveUser}"/>
                 <h:messages/>
             </h:panelGrid>

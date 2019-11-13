@@ -37,7 +37,7 @@
                 </h:dataTable>
             </h:column>
 
-            <h:column>
+            <h:column rendered="#{request.isUserInRole('ADMIN')}">
                 <h:form>
                     <h:commandButton value="Delete" action="#{userList.removeUser(user)}"/>
                 </h:form>
