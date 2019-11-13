@@ -11,6 +11,7 @@ import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
+
 import static com.klopsi.user.HashUtils.sha256;
 
 

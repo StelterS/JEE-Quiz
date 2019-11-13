@@ -2,6 +2,7 @@ package com.klopsi.user;
 
 import com.klopsi.user.model.User;
 import lombok.NoArgsConstructor;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
