@@ -38,6 +38,17 @@ public class UserService {
 		}
 	}
 
+	public User findUserByLogin(String login) {
+		if(securityContext.isUserInRole("USER")){
+			return em.createNamedQuery(User.Queries.FIND_BY_LOGIN, User.class)
+				.setParameter("login", securityContext.getUserPrincipal().getName())
+				.getSingleResult();
+		}
+		else {
+			throw new AccessControlException("Access denied");
+		}
+	}
+
 	@Transactional
 	public void removeUser(User user) {
 		if(securityContext.isUserInRole("ADMIN")){

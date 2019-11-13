@@ -34,14 +34,6 @@
                 </h:selectOneMenu>
                 <h:message for="exercise"/>
 
-                <h:outputLabel value="User:" for="user"/>
-                <h:selectOneMenu id="user" collectionType="java.util.ArrayList" value="#{answerEdit.answer.user}">
-                    <f:selectItem itemValue="#{null}" itemLabel="-"/>
-                    <f:selectItems value="#{userEdit.availableUsers}" var="user" itemValue="#{user}"
-                                   itemLabel="#{user.firstName} #{user.lastName}"/>
-                </h:selectOneMenu>
-                <h:message for="user"/>
-
                 <h:commandButton value="Save" action="#{answerEdit.saveAnswer}"/>
                 <h:messages/>
             </h:panelGrid>
