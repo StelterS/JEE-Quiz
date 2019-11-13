@@ -2,6 +2,7 @@ package com.klopsi.answer.view;
 
 import com.klopsi.answer.AnswerService;
 import com.klopsi.answer.model.Answer;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;

@@ -1,7 +1,6 @@
 package com.klopsi.user.resource;
 
 import com.klopsi.answer.model.Answer;
-import com.klopsi.answer.resource.AnswerResource;
 import com.klopsi.resource.Api;
 import com.klopsi.resource.model.EmbeddedResource;
 import com.klopsi.resource.model.Link;
@@ -10,7 +9,10 @@ import com.klopsi.user.model.User;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.util.List;
 import java.util.Set;
 

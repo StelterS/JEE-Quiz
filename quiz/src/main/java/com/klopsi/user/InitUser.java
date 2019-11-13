@@ -1,13 +1,13 @@
 package com.klopsi.user;
 
 import com.klopsi.user.model.User;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Initialized;
 import javax.enterprise.event.Observes;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.HashSet;

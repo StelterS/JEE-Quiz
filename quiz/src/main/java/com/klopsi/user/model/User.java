@@ -3,6 +3,7 @@ package com.klopsi.user.model;
 import com.klopsi.answer.model.Answer;
 import com.klopsi.resource.model.Link;
 import lombok.*;
+
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
@@ -11,7 +12,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = {"links", "answers", "roles"})	// TODO why it does not work with roles in hashcode??

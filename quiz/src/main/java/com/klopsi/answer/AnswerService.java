@@ -1,9 +1,8 @@
 package com.klopsi.answer;
 
 import com.klopsi.answer.model.Answer;
-import com.klopsi.exercise.model.Exercise;
-import com.klopsi.user.model.User;
 import lombok.NoArgsConstructor;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;

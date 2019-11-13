@@ -3,8 +3,8 @@ package com.klopsi.exercise;
 import com.klopsi.exercise.model.Difficulty;
 import com.klopsi.exercise.model.Exercise;
 import lombok.NoArgsConstructor;
+
 import javax.enterprise.context.ApplicationScoped;
-import javax.faces.context.ExternalContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

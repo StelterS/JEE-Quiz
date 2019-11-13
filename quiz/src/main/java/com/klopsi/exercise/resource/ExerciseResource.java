@@ -9,12 +9,14 @@ import com.klopsi.resource.model.Link;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
 import static com.klopsi.resource.UriHelper.pagedUri;
 import static com.klopsi.resource.UriHelper.uri;
-import static java.lang.Math.max;
 
 @Path("/exercises")
 public class ExerciseResource {

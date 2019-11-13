@@ -4,6 +4,7 @@ import com.klopsi.answer.AnswerService;
 import com.klopsi.answer.model.Answer;
 import lombok.Getter;
 import lombok.Setter;
+
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;

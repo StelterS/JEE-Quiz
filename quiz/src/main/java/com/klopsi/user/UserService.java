@@ -9,8 +9,6 @@ import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.security.AccessControlException;
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 
 @ApplicationScoped

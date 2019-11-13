@@ -3,15 +3,18 @@ package com.klopsi.exercise.model;
 import com.klopsi.answer.model.Answer;
 import com.klopsi.resource.model.Link;
 import lombok.*;
+
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = {"links", "answers"})

@@ -4,6 +4,7 @@ import com.klopsi.exercise.model.Exercise;
 import com.klopsi.resource.model.Link;
 import com.klopsi.user.model.User;
 import lombok.*;
+
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;

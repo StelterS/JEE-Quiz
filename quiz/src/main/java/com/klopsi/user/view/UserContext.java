@@ -1,7 +1,6 @@
 package com.klopsi.user.view;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.ExternalContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
