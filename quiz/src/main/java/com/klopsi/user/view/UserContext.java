@@ -21,6 +21,4 @@ public class UserContext implements Serializable {
         context.logout();
         return "/index?faces-redirect=true";
     }
-
 }
-
