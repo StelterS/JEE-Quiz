@@ -50,4 +50,7 @@
     <security-role>
         <role-name>USER</role-name>
     </security-role>
+    <security-role>
+        <role-name>MODERATOR</role-name>
+    </security-role>
 </web-app>
