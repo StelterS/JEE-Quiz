@@ -9,7 +9,7 @@ import java.lang.annotation.*;
  */
 @Target({ElementType.FIELD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = RepeatedPasswordsValidator.class)
+@Constraint(validatedBy = {RepeatedPasswordsValidator.class, RepeatedPasswordRegisterValidator.class})
 @Documented
 public @interface RepeatedPasswords {
 
