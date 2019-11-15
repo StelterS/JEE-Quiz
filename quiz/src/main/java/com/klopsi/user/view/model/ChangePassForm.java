@@ -1,4 +1,4 @@
-package com.klopsi.user.model;
+package com.klopsi.user.view.model;
 
 import com.klopsi.user.validation.Password;
 import com.klopsi.user.validation.PasswordGroup;
