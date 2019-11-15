@@ -50,6 +50,10 @@ public class UserService {
 		}
 	}
 
+	public List<String> findUserLogins() {
+			return em.createNamedQuery(User.Queries.FIND_ALL_LOGINS, String.class).getResultList();
+	}
+
 	@Transactional
 	public void removeUser(User user) {
 		if(securityContext.isUserInRole("ADMIN")){

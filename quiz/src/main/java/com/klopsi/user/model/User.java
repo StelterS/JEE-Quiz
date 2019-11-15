@@ -24,6 +24,7 @@ import java.util.Set;
 @Table(name = "users")
 @NamedQuery(name = User.Queries.FIND_ALL, query = "select u from User u")
 @NamedQuery(name = User.Queries.FIND_BY_LOGIN, query = "select u from User u where u.login = :login")
+@NamedQuery(name = User.Queries.FIND_ALL_LOGINS, query = "select u.login from User u")
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class User implements Serializable {
@@ -31,6 +32,7 @@ public class User implements Serializable {
 	public static class Queries {
 		public static final String FIND_ALL = "User.findAll";
 		public static final String FIND_BY_LOGIN = "User.findByLogin";
+		public static final String FIND_ALL_LOGINS = "User.findAllLogin";
 	}
 
 	public static class Roles {
