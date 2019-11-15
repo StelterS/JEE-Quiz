@@ -66,16 +66,15 @@ public class UserService {
 
 	@Transactional
 	public void saveUser(User user){
-		if(securityContext.isUserInRole("USER")){
-			if(user.getId() == null) {
-				em.persist(user);
-			}
-			else {
-				em.merge(user);
-			}
+		if(user.getId() == null) {
+			em.persist(user);
 		}
 		else {
-			throw new AccessControlException("Access denied");
+			if (securityContext.isUserInRole("USER")) {
+				em.merge(user);
+			} else {
+				throw new AccessControlException("Access denied");
+			}
 		}
 	}
 }
