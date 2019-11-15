@@ -1,7 +1,6 @@
 package com.klopsi.user.validation;
 
-
-import com.klopsi.user.model.ChangePassForm;
+import com.klopsi.user.view.model.ChangePassForm;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
