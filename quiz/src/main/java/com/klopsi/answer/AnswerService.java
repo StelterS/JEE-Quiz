@@ -1,6 +1,7 @@
 package com.klopsi.answer;
 
 import com.klopsi.answer.model.Answer;
+import com.klopsi.user.interceptor.CheckUser;
 import lombok.NoArgsConstructor;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -45,19 +46,10 @@ public class AnswerService {
 		}
 	}
 
+	@CheckUser
 	@Transactional
 	public void removeAnswer(Answer answer) {
-		if(securityContext.isUserInRole("ADMIN") || securityContext.isUserInRole("MODERATOR")){
-			em.remove(em.merge(answer));
-		}
-		else if(securityContext.isUserInRole("USER")
-			&& answer.getUser().getLogin().equals(securityContext.getUserPrincipal().getName())) {
-			// user can delete his own answers only
-			em.remove(em.merge(answer));
-		}
-		else {
-			throw new AccessControlException("Access denied");
-		}
+		em.remove(em.merge(answer));
 	}
 
 	@Transactional
