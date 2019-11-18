@@ -1,6 +1,5 @@
 package com.klopsi.answer.interceptor;
 
-import com.klopsi.answer.interceptor.CheckUser;
 import com.klopsi.answer.model.Answer;
 import com.klopsi.user.model.RolePermission;
 import com.klopsi.user.model.User;
@@ -19,10 +18,10 @@ import java.util.Arrays;
 import java.util.logging.Level;
 
 @Interceptor
-@CheckUser
+@CheckAnswerUser
 @Priority(100)
 @Log
-public class CheckUserInterceptor {
+public class CheckAnswerUserInterceptor {
 
     @PersistenceContext
     private EntityManager em;
@@ -54,6 +53,10 @@ public class CheckUserInterceptor {
         }
         else if(permission == RolePermission.Permission.GRANTED) {
             return context.proceed();
+        }
+        else if(permission == RolePermission.Permission.IF_OWNER && securityContext.getUserPrincipal() == null) {
+            // anonymous does not own anything
+            throw new AccessDeniedException("Access denied");
         }
         // else permission == IF_OWNER
         Answer ans = null;

@@ -1,4 +1,4 @@
-package com.klopsi.answer.interceptor;
+package com.klopsi.user.interceptor;
 
 import javax.interceptor.InterceptorBinding;
 import java.lang.annotation.ElementType;

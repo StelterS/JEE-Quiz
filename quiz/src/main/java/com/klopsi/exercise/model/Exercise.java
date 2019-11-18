@@ -24,12 +24,14 @@ import java.util.Map;
 @NamedQuery(name = Exercise.Queries.FIND_ALL, query = "select e from Exercise e")
 @NamedQuery(name = Exercise.Queries.COUNT, query = "select count(e) from Exercise e")
 @NamedQuery(name = Exercise.Queries.FIND_BY_DIFFICULTY, query = "select e from Exercise e where e.difficulty in :difficulties")
+@NamedQuery(name = Exercise.Queries.FIND_BY_ID, query = "select e from Exercise e where e.id in :id")
 public class Exercise implements Serializable {
 
 	public static class Queries {
 		public static final String FIND_ALL = "Exercise.findAll";
 		public static final String COUNT = "Exercise.count";
 		public static final String FIND_BY_DIFFICULTY = "Author.findByDifficulty";
+		public static final String FIND_BY_ID = "Author.findById";
 	}
 
 	@Id

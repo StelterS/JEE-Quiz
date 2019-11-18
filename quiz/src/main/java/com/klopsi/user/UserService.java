@@ -1,5 +1,6 @@
 package com.klopsi.user;
 
+import com.klopsi.user.interceptor.CheckUser;
 import com.klopsi.user.model.User;
 import lombok.NoArgsConstructor;
 
@@ -21,15 +22,12 @@ public class UserService {
 	@Inject
 	private HttpServletRequest securityContext;
 
+	@CheckUser
 	public List<User> findAllUsers() {
-		if(securityContext.isUserInRole("USER")){
-			return em.createNamedQuery(User.Queries.FIND_ALL, User.class).getResultList();
-		}
-		else {
-			throw new AccessControlException("Access denied");
-		}
+		return em.createNamedQuery(User.Queries.FIND_ALL, User.class).getResultList();
 	}
 
+	@CheckUser
 	public User findUser(int id) {
 		if(securityContext.isUserInRole("USER")){
 			return em.find(User.class, id);
@@ -39,42 +37,32 @@ public class UserService {
 		}
 	}
 
+	@CheckUser
 	public User findUserByLogin(String login) {
-		if(securityContext.isUserInRole("USER")){
-			return em.createNamedQuery(User.Queries.FIND_BY_LOGIN, User.class)
+		return em.createNamedQuery(User.Queries.FIND_BY_LOGIN, User.class)
 				.setParameter("login", securityContext.getUserPrincipal().getName())
 				.getSingleResult();
-		}
-		else {
-			throw new AccessControlException("Access denied");
-		}
 	}
 
+	@CheckUser
 	public List<String> findUserLogins() {
 			return em.createNamedQuery(User.Queries.FIND_ALL_LOGINS, String.class).getResultList();
 	}
 
+	@CheckUser
 	@Transactional
 	public void removeUser(User user) {
-		if(securityContext.isUserInRole("ADMIN")){
-			em.remove(em.merge(user));
-		}
-		else {
-			throw new AccessControlException("Access denied");
-		}
+		em.remove(em.merge(user));
 	}
 
+	@CheckUser
 	@Transactional
 	public void saveUser(User user){
 		if(user.getId() == null) {
 			em.persist(user);
 		}
 		else {
-			if (securityContext.isUserInRole("USER")) {
-				em.merge(user);
-			} else {
-				throw new AccessControlException("Access denied");
-			}
+			em.merge(user);
 		}
 	}
 }

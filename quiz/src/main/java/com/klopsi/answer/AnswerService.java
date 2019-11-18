@@ -1,7 +1,7 @@
 package com.klopsi.answer;
 
 import com.klopsi.answer.model.Answer;
-import com.klopsi.answer.interceptor.CheckUser;
+import com.klopsi.answer.interceptor.CheckAnswerUser;
 import lombok.NoArgsConstructor;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -22,7 +22,7 @@ public class AnswerService {
 	@Inject
 	private HttpServletRequest securityContext;
 
-	@CheckUser
+	@CheckAnswerUser
 	public List<Answer> findAllAnswers() {
 		if(securityContext.isUserInRole("ADMIN") || securityContext.isUserInRole("MODERATOR")){
 			return em.createNamedQuery(Answer.Queries.FIND_ALL, Answer.class).getResultList();
@@ -38,18 +38,18 @@ public class AnswerService {
 		}
 	}
 
-	@CheckUser
+	@CheckAnswerUser
 	public synchronized Answer findAnswer(int id) {
 		return em.find(Answer.class, id);
 	}
 
-	@CheckUser
+	@CheckAnswerUser
 	@Transactional
 	public void removeAnswer(Answer answer) {
 		em.remove(em.merge(answer));
 	}
 
-	@CheckUser
+	@CheckAnswerUser
 	@Transactional
 	public synchronized void saveAnswer(Answer answer){
 		if (answer.getId() == null) {
