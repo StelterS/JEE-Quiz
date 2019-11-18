@@ -1,5 +1,6 @@
-package com.klopsi.user.interceptor;
+package com.klopsi.answer.interceptor;
 
+import com.klopsi.answer.interceptor.CheckUser;
 import com.klopsi.answer.model.Answer;
 import com.klopsi.user.model.RolePermission;
 import com.klopsi.user.model.User;
@@ -55,7 +56,23 @@ public class CheckUserInterceptor {
             return context.proceed();
         }
         // else permission == IF_OWNER
-        Answer ans = (Answer)context.getParameters()[0];
+        Answer ans = null;
+        switch (context.getMethod().getName())
+        {
+            case "removeAnswer":
+            case "saveAnswer":
+                ans = (Answer)context.getParameters()[0];
+                break;
+            case "findAnswer":
+                ans = em.createNamedQuery(Answer.Queries.FIND_BY_ID, Answer.class)
+                    .setParameter("id", context.getParameters()[0])
+                    .getSingleResult();
+                break;
+            case "findAllAnswer":
+                return context.proceed();
+            default:
+                throw new AccessDeniedException("Access denied");
+        }
         if((ans == null) || (!ans.getUser().getLogin().equals(securityContext.getUserPrincipal().getName()))){
             throw new AccessDeniedException("Access denied");
         }

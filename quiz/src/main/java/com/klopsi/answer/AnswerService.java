@@ -1,7 +1,7 @@
 package com.klopsi.answer;
 
 import com.klopsi.answer.model.Answer;
-import com.klopsi.user.interceptor.CheckUser;
+import com.klopsi.answer.interceptor.CheckUser;
 import lombok.NoArgsConstructor;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -22,6 +22,7 @@ public class AnswerService {
 	@Inject
 	private HttpServletRequest securityContext;
 
+	@CheckUser
 	public List<Answer> findAllAnswers() {
 		if(securityContext.isUserInRole("ADMIN") || securityContext.isUserInRole("MODERATOR")){
 			return em.createNamedQuery(Answer.Queries.FIND_ALL, Answer.class).getResultList();
@@ -37,13 +38,9 @@ public class AnswerService {
 		}
 	}
 
+	@CheckUser
 	public synchronized Answer findAnswer(int id) {
-		if(securityContext.isUserInRole("USER")){
-			return em.find(Answer.class, id);
-		}
-		else {
-			throw new AccessControlException("Access denied");
-		}
+		return em.find(Answer.class, id);
 	}
 
 	@CheckUser
@@ -52,17 +49,13 @@ public class AnswerService {
 		em.remove(em.merge(answer));
 	}
 
+	@CheckUser
 	@Transactional
 	public synchronized void saveAnswer(Answer answer){
-		if(securityContext.isUserInRole("USER")){
-			if (answer.getId() == null) {
-				em.persist(answer);
-			} else {
-				em.merge(answer);
-			}
-		}
-		else {
-			throw new AccessControlException("Access denied");
+		if (answer.getId() == null) {
+			em.persist(answer);
+		} else {
+			em.merge(answer);
 		}
 	}
 }
