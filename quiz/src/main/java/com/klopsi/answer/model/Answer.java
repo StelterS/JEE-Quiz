@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,12 +23,14 @@ import java.util.Map;
 @NamedQuery(name = Answer.Queries.FIND_ALL, query = "select a from Answer a")
 @NamedQuery(name = Answer.Queries.FIND_BY_USER, query = "select a from Answer a where a.user.login = :login")
 @NamedQuery(name = Answer.Queries.FIND_BY_ID, query = "select a from Answer a where a.id = :id")
+@NamedQuery(name = Answer.Queries.FIND_BY_MODIFICATION_DATE, query = "select a from Answer a order by a.lastModificationDate desc")
 public class Answer implements Serializable {
 
 	public static class Queries {
 		public static final String FIND_ALL = "Answer.findAll";
 		public static final String FIND_BY_USER = "Answer.findAllByUser";
 		public static final String FIND_BY_ID = "Answer.findById";
+		public static final String FIND_BY_MODIFICATION_DATE = "Answer.findByModificationDate";
 	}
 
 	@Id
@@ -51,9 +54,12 @@ public class Answer implements Serializable {
 	@Getter
 	@Setter
 	@Column(name = "submission_date")
-	@PastOrPresent(message = "Submission date cannot be set in the future")
-	@NotNull(message = "Submission date must be provided")
-	private LocalDate submissionDate;
+	private LocalDateTime lastModificationDate;
+
+	@PrePersist
+	private void update() {
+		lastModificationDate = LocalDateTime.now();
+	}
 
 	@Setter
 	@ManyToOne
@@ -87,9 +93,9 @@ public class Answer implements Serializable {
 	private Map<String, Link> links = new HashMap<>();
 
 
-	public Answer(String content, Integer percent, LocalDate submissionDate){
+	public Answer(String content, Integer percent, LocalDateTime submissionDate){
 		this.content = content;
 		this.percent = percent;
-		this.submissionDate = submissionDate;
+		this.lastModificationDate = submissionDate;
 	}
 }

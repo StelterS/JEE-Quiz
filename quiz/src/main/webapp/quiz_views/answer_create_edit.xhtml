@@ -19,12 +19,6 @@
                 <h:inputText id="percent" value="#{answerEdit.answer.percent}"/>
                 <h:message for="percent"/>
 
-                <h:outputLabel value="Submission date:" for="date"/>
-                <h:inputText id="date" value="#{answerEdit.answer.submissionDate}">
-                    <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
-                </h:inputText>
-                <h:message for="date"/>
-
                 <h:outputLabel value="Exercise:" for="exercise"/>
                 <h:selectOneMenu id="exercise" collectionType="java.util.ArrayList"
                                  value="#{answerEdit.answer.exercise}">

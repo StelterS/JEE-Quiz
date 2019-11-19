@@ -1,6 +1,5 @@
 package com.klopsi.user.interceptor;
 
-import com.klopsi.answer.interceptor.CheckAnswerUser;
 import com.klopsi.user.model.RolePermission;
 import com.klopsi.user.model.User;
 import lombok.extern.java.Log;
@@ -19,7 +18,7 @@ import java.util.Arrays;
 import java.util.logging.Level;
 
 @Interceptor
-@CheckAnswerUser
+@CheckUser
 @Priority(100)
 @Log
 public class CheckUserInterceptor {

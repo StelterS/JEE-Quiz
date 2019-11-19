@@ -39,6 +39,11 @@ public class AnswerService {
 	}
 
 	@CheckAnswerUser
+	public List<Answer> findAllAnswersByModificationDate() {
+		return em.createNamedQuery(Answer.Queries.FIND_BY_MODIFICATION_DATE, Answer.class).getResultList();
+	}
+
+	@CheckAnswerUser
 	public synchronized Answer findAnswer(int id) {
 		return em.find(Answer.class, id);
 	}

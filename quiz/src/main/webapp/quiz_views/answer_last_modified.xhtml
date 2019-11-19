@@ -6,8 +6,8 @@
                 template="/WEB-INF/templates/main.xhtml">
 
     <ui:define name="content">
-        <h:dataTable value="#{answerList.answers}" var="answer"
-            rowClasses="table-row">
+        <h:dataTable value="#{answerLastModified.answers}" var="answer"
+                     rowClasses="table-row">
             <h:column>
                 <f:facet name="header">ID</f:facet>
                 <h:outputText value="#{answer.id}"/>
@@ -37,21 +37,7 @@
                 <f:facet name="header">User</f:facet>
                 <h:outputText value="#{answer.user.firstName} #{answer.user.lastName}"/>
             </h:column>
-
-            <h:column>
-                <h:form>
-                    <h:commandButton value="Delete" action="#{answerList.removeAnswer(answer)}"/>
-                </h:form>
-            </h:column>
-
-            <h:column>
-                <h:button value="Edit" outcome="answer_create_edit.xhtml">
-                    <f:param name="answer" value="#{answer.id}"/>
-                </h:button>
-            </h:column>
-
         </h:dataTable>
-        <h:button value="Create" outcome="answer_create_edit.xhtml"/>
     </ui:define>
 
 </ui:composition>

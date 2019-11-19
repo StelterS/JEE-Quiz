@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.logging.Level;
 
 @Interceptor
-@CheckAnswerUser
+@CheckExerciseUser
 @Priority(100)
 @Log
 public class CheckExerciseUserInterceptor {

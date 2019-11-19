@@ -72,11 +72,12 @@ public class CheckAnswerUserInterceptor {
                     .getSingleResult();
                 break;
             case "findAllAnswer":
+            case "findAllAnswersByModificationDate":
                 return context.proceed();
             default:
                 throw new AccessDeniedException("Access denied");
         }
-        if((ans == null) || (!ans.getUser().getLogin().equals(securityContext.getUserPrincipal().getName()))){
+        if((ans == null) || ((ans.getId() != null) && (!ans.getUser().getLogin().equals(securityContext.getUserPrincipal().getName())))){
             throw new AccessDeniedException("Access denied");
         }
         return context.proceed();

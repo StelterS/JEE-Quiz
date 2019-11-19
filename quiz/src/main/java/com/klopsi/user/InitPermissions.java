@@ -288,7 +288,7 @@ public class InitPermissions {
 		RolePermission perm49 = RolePermission.builder()
 			.role(User.Roles.USER)
 			.operation("findAllAnswers")
-			.permission(RolePermission.Permission.DENIED).build();
+			.permission(RolePermission.Permission.GRANTED).build();
 
 		RolePermission perm50 = RolePermission.builder()
 			.role(User.Roles.USER)
@@ -326,8 +326,6 @@ public class InitPermissions {
 			.role(User.Roles.ADMIN)
 			.operation("saveAnswer")
 			.permission(RolePermission.Permission.GRANTED).build();
-
-
 
 		// moderator permissions
 		RolePermission perm57 = RolePermission.builder()
@@ -372,6 +370,25 @@ public class InitPermissions {
 			.operation("saveAnswer")
 			.permission(RolePermission.Permission.DENIED).build();
 
+		RolePermission perm65 = RolePermission.builder()
+			.role(User.Roles.ADMIN)
+			.operation("findAllAnswersByModificationDate")
+			.permission(RolePermission.Permission.GRANTED).build();
+
+		RolePermission perm66 = RolePermission.builder()
+			.role(User.Roles.MODERATOR)
+			.operation("findAllAnswersByModificationDate")
+			.permission(RolePermission.Permission.GRANTED).build();
+
+		RolePermission perm67 = RolePermission.builder()
+			.role(User.Roles.USER)
+			.operation("findAllAnswersByModificationDate")
+			.permission(RolePermission.Permission.GRANTED).build();
+
+		RolePermission perm68 = RolePermission.builder()
+			.role(User.Roles.ANONYMOUS)
+			.operation("findAllAnswersByModificationDate")
+			.permission(RolePermission.Permission.GRANTED).build();
 
 		em.persist(perm1);
 		em.persist(perm2);
@@ -437,5 +454,9 @@ public class InitPermissions {
 		em.persist(perm62);
 		em.persist(perm63);
 		em.persist(perm64);
+		em.persist(perm65);
+		em.persist(perm66);
+		em.persist(perm67);
+		em.persist(perm68);
 	}
 }
