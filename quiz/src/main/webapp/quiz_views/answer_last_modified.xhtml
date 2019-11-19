@@ -6,7 +6,7 @@
                 template="/WEB-INF/templates/main.xhtml">
 
     <ui:define name="content">
-        <h:dataTable value="#{answerLastModified.answers}" var="answer"
+        <h:dataTable id="Answers" value="#{answerLastModified.answers}" var="answer"
                      rowClasses="table-row">
             <h:column>
                 <f:facet name="header">ID</f:facet>
@@ -38,6 +38,11 @@
                 <h:outputText value="#{answer.user.firstName} #{answer.user.lastName}"/>
             </h:column>
         </h:dataTable>
+        <h:form>
+            <f:websocket channel="push" scope="application">
+                <f:ajax event="updateTable" render=":Answers" />
+            </f:websocket>
+        </h:form>
     </ui:define>
 
 </ui:composition>

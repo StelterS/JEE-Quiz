@@ -5,6 +5,8 @@ import com.klopsi.answer.events.AnswerUpdate;
 import com.klopsi.answer.model.Answer;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.event.Observes;
+import javax.faces.push.Push;
+import javax.faces.push.PushContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
@@ -14,6 +16,10 @@ import java.util.List;
 public class AnswerLastModified {
 	private AnswerService service;
 	private List<Answer> answers;
+
+	@Inject
+	@Push
+	private PushContext push;
 
 	@Inject
 	public AnswerLastModified(AnswerService service){
@@ -28,6 +34,6 @@ public class AnswerLastModified {
 	}
 
 	public void processReservation(@Observes AnswerUpdate answerUpdate) {
-		System.out.println("Oh my god coś się stało");
+		push.send("updateTable");
 	}
 }
