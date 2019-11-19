@@ -1,9 +1,10 @@
 package com.klopsi.answer.view;
 
 import com.klopsi.answer.AnswerService;
+import com.klopsi.answer.events.AnswerUpdate;
 import com.klopsi.answer.model.Answer;
-
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
@@ -24,5 +25,9 @@ public class AnswerLastModified {
 			answers = service.findAllAnswersByModificationDate();
 		}
 		return answers;
+	}
+
+	public void processReservation(@Observes AnswerUpdate answerUpdate) {
+		System.out.println("Oh my god coś się stało");
 	}
 }

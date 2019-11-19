@@ -5,6 +5,7 @@ import com.klopsi.resource.model.Link;
 import com.klopsi.user.model.User;
 import lombok.*;
 
+import javax.inject.Inject;
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
@@ -56,6 +57,7 @@ public class Answer implements Serializable {
 	@Column(name = "submission_date")
 	private LocalDateTime lastModificationDate;
 
+	@PreUpdate
 	@PrePersist
 	private void update() {
 		lastModificationDate = LocalDateTime.now();

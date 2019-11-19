@@ -1,10 +1,12 @@
 package com.klopsi.answer;
 
+import com.klopsi.answer.events.AnswerUpdate;
 import com.klopsi.answer.model.Answer;
 import com.klopsi.answer.interceptor.CheckAnswerUser;
 import lombok.NoArgsConstructor;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,6 +23,9 @@ public class AnswerService {
 
 	@Inject
 	private HttpServletRequest securityContext;
+
+	@Inject
+	private Event<AnswerUpdate> answerUpdateEvent;
 
 	@CheckAnswerUser
 	public List<Answer> findAllAnswers() {
@@ -62,5 +67,6 @@ public class AnswerService {
 		} else {
 			em.merge(answer);
 		}
+		answerUpdateEvent.fire(new AnswerUpdate(answer));
 	}
 }
