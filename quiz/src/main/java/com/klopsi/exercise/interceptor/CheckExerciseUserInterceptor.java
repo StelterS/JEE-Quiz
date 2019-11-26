@@ -1,8 +1,5 @@
 package com.klopsi.exercise.interceptor;
 
-import com.klopsi.answer.interceptor.CheckAnswerUser;
-import com.klopsi.answer.model.Answer;
-import com.klopsi.exercise.model.Exercise;
 import com.klopsi.user.model.RolePermission;
 import com.klopsi.user.model.User;
 import lombok.extern.java.Log;

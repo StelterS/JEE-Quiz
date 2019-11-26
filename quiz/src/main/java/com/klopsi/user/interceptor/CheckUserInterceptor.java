@@ -9,13 +9,10 @@ import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import javax.management.relation.Role;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.file.AccessDeniedException;
-import java.util.Arrays;
-import java.util.logging.Level;
 
 @Interceptor
 @CheckUser

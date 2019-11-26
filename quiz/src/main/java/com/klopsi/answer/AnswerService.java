@@ -1,30 +1,30 @@
 package com.klopsi.answer;
 
 import com.klopsi.answer.events.AnswerUpdate;
-import com.klopsi.answer.model.Answer;
 import com.klopsi.answer.interceptor.CheckAnswerUser;
-import com.klopsi.exercise.model.Exercise;
-import com.klopsi.user.model.User;
-import lombok.NoArgsConstructor;
+import com.klopsi.answer.model.Answer;
 import com.klopsi.answer.model.Answer_;
-import com.klopsi.user.model.User_;
+import com.klopsi.exercise.model.Exercise;
 import com.klopsi.exercise.model.Exercise_;
+import com.klopsi.user.model.User;
+import com.klopsi.user.model.User_;
+import lombok.NoArgsConstructor;
 import org.primefaces.model.SortOrder;
 
-import javax.ejb.Local;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.Attribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
-import java.nio.file.AccessDeniedException;
 import java.security.AccessControlException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -137,13 +137,9 @@ public class AnswerService {
 					predicates.add(cb.like(cb.lower(root.get(stringAttribute)), "%" + ((String)value).toLowerCase() + "%"));
 				}
 				else if (key.getJavaType() == User.class) {
-					@SuppressWarnings("unchecked")
-					SingularAttribute<Answer, String> stringAttribute = (SingularAttribute<Answer, String>)attribute;
 					predicates.add(cb.like(cb.lower(root.get(Answer_.user).get(User_.login)), "%" + ((String)value).toLowerCase() + "%"));
 				}
 				else if (key.getJavaType() == Exercise.class) {
-					@SuppressWarnings("unchecked")
-					SingularAttribute<Answer, String> stringAttribute = (SingularAttribute<Answer, String>)attribute;
 					predicates.add(cb.like(cb.lower(root.get(Answer_.exercise).get(Exercise_.title)), "%" + ((String)value).toLowerCase() + "%"));
 				}
 				else if (key.getJavaType() == LocalDateTime.class) {

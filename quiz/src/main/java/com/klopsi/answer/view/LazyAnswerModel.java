@@ -2,12 +2,11 @@ package com.klopsi.answer.view;
 
 import com.klopsi.answer.AnswerService;
 import com.klopsi.answer.model.Answer;
+import com.klopsi.answer.model.Answer_;
 import com.klopsi.user.UserService;
-import com.klopsi.user.model.User;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
-import com.klopsi.answer.model.Answer_;
-import com.klopsi.user.model.User_;
+
 import javax.persistence.metamodel.Attribute;
 import java.util.HashMap;
 import java.util.List;

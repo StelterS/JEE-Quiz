@@ -2,7 +2,6 @@ package com.klopsi.user.model;
 
 import lombok.*;
 
-import javax.management.relation.Role;
 import javax.persistence.*;
 import java.io.Serializable;
 

@@ -1,8 +1,8 @@
 package com.klopsi.user.view;
 
 import com.klopsi.user.UserService;
-import com.klopsi.user.view.model.ChangePassForm;
 import com.klopsi.user.model.User;
+import com.klopsi.user.view.model.ChangePassForm;
 import lombok.Getter;
 
 import javax.faces.view.ViewScoped;
