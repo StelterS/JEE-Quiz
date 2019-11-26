@@ -30,9 +30,6 @@ public class CheckUserInterceptor {
 
 	@AroundInvoke
 	public Object invoke(InvocationContext context) throws Exception {
-		log.log(Level.INFO, "User " + securityContext.getUserPrincipal().getName() + " calls "
-			+ context.getMethod().getName() + " with params " + Arrays.toString(context.getParameters()));
-
 		RolePermission.Permission permission = RolePermission.Permission.DENIED;
 		if(securityContext.getUserPrincipal() == null) {
 			permission = checkPermission(User.Roles.ANONYMOUS, context.getMethod().getName());
