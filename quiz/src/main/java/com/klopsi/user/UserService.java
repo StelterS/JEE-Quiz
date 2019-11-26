@@ -24,7 +24,9 @@ public class UserService {
 
 	@CheckUser
 	public List<User> findAllUsers() {
-		return em.createNamedQuery(User.Queries.FIND_ALL, User.class).getResultList();
+		return em.createNamedQuery(User.Queries.FIND_ALL, User.class)
+			.setHint("javax.persistence.loadgraph", em.getEntityGraph(User.Graphs.WITH_ANSWER_AND_ROLE))
+			.getResultList();
 	}
 
 	@CheckUser
@@ -41,12 +43,15 @@ public class UserService {
 	public User findUserByLogin(String login) {
 		return em.createNamedQuery(User.Queries.FIND_BY_LOGIN, User.class)
 				.setParameter("login", securityContext.getUserPrincipal().getName())
+				.setHint("javax.persistence.loadgraph", em.getEntityGraph(User.Graphs.WITH_ANSWER_AND_ROLE))
 				.getSingleResult();
 	}
 
 	@CheckUser
 	public List<String> findUserLogins() {
-			return em.createNamedQuery(User.Queries.FIND_ALL_LOGINS, String.class).getResultList();
+			return em.createNamedQuery(User.Queries.FIND_ALL_LOGINS, String.class)
+				.setHint("javax.persistence.loadgraph", em.getEntityGraph(User.Graphs.WITH_ANSWER_AND_ROLE))
+				.getResultList();
 	}
 
 	@CheckUser

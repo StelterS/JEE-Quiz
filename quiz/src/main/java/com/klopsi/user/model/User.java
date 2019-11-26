@@ -27,7 +27,13 @@ import java.util.Set;
 @NamedQuery(name = User.Queries.FIND_ALL_LOGINS, query = "select u.login from User u")
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NamedEntityGraph(name = User.Graphs.WITH_ANSWER_AND_ROLE,
+	attributeNodes = {@NamedAttributeNode("answers"), @NamedAttributeNode("roles")})
 public class User implements Serializable {
+
+	public static class Graphs {
+		public static final String WITH_ANSWER_AND_ROLE = "User(Answer, Role)";
+	}
 
 	public static class Queries {
 		public static final String FIND_ALL = "User.findAll";
@@ -68,7 +74,7 @@ public class User implements Serializable {
 	 */
 	@Getter
 	@Setter
-	@ElementCollection(fetch = FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(name = "users_roles", joinColumns = @JoinColumn(name = "user"))
 	@Column(name = "role")
 	@Singular
@@ -95,7 +101,7 @@ public class User implements Serializable {
 	@NotNull
 	@Getter
 	@Setter
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE)	// answers are deleted with user
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.REMOVE)	// answers are deleted with user
 	private Set<Answer> answers;
 
 	/**
