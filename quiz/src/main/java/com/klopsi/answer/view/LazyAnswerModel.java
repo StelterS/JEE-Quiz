@@ -38,7 +38,7 @@ public class LazyAnswerModel extends LazyDataModel<Answer> {
 		if (filters.containsKey(Answer_.LAST_MODIFICATION_DATE)) {
 			jpaFilters.put(Answer_.lastModificationDate, filters.get(Answer_.LAST_MODIFICATION_DATE));
 		}
-		List<Answer> answers = service.findAllAnswers(first, pageSize, jpaFilters);
+		List<Answer> answers = service.findAllAnswers(first, pageSize, jpaFilters, sortField, sortOrder);
 		setRowCount((int) service.countAnswers(jpaFilters));
 		return answers;
 	}

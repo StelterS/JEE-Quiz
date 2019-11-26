@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import com.klopsi.answer.model.Answer_;
 import com.klopsi.user.model.User_;
 import com.klopsi.exercise.model.Exercise_;
+import org.primefaces.model.SortOrder;
 
 import javax.ejb.Local;
 import javax.enterprise.context.ApplicationScoped;
@@ -57,7 +58,7 @@ public class AnswerService {
 		}
 	}
 
-	public List<Answer> findAllAnswers(int offset, int limit, Map<Attribute<Answer, ?>, ?> filters) {
+	public List<Answer> findAllAnswers(int offset, int limit, Map<Attribute<Answer, ?>, ?> filters, String sortField, SortOrder sortOrder) {
 		if (securityContext.isUserInRole(User.Roles.USER)) {
 			CriteriaBuilder cb = em.getCriteriaBuilder();
 			CriteriaQuery<Answer> query = cb.createQuery(Answer.class);
@@ -66,6 +67,52 @@ public class AnswerService {
 			query.select(root);
 			List<Predicate> predicates = parsePredicates(filters, cb, root);
 			query.where(cb.and(predicates.toArray(new Predicate[0])));
+
+			if(sortField != null && sortOrder != null)
+			{
+				switch(sortField){
+					case "user":
+						if(sortOrder == SortOrder.ASCENDING){
+							query.orderBy(cb.asc(cb.lower(root.get(Answer_.user).get(User_.login))));
+						}
+						else {
+							query.orderBy(cb.desc(cb.lower(root.get(Answer_.user).get(User_.login))));
+						}
+						break;
+					case "content":
+						if(sortOrder == SortOrder.ASCENDING){
+							query.orderBy(cb.asc(cb.lower(root.get(Answer_.content))));
+						}
+						else {
+							query.orderBy(cb.desc(cb.lower(root.get(Answer_.content))));
+						}
+						break;
+					case "percent":
+						if(sortOrder == SortOrder.ASCENDING){
+							query.orderBy(cb.asc(root.get(Answer_.percent)));
+						}
+						else {
+							query.orderBy(cb.desc(root.get(Answer_.percent)));
+						}
+						break;
+					case "exercise":
+						if(sortOrder == SortOrder.ASCENDING){
+							query.orderBy(cb.asc(cb.lower(root.get(Answer_.exercise).get(Exercise_.title))));
+						}
+						else {
+							query.orderBy(cb.desc(cb.lower(root.get(Answer_.exercise).get(Exercise_.title))));
+						}
+						break;
+					case "lastModificationDate":
+						if(sortOrder == SortOrder.ASCENDING){
+							query.orderBy(cb.asc(root.get(Answer_.lastModificationDate)));
+						}
+						else {
+							query.orderBy(cb.desc(root.get(Answer_.lastModificationDate)));
+						}
+						break;
+				}
+			}
 
 			return em.createQuery(query)
 				.setFirstResult(offset)

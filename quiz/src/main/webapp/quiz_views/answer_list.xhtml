@@ -12,19 +12,19 @@
                 <p:column headerText="ID">
                     <h:outputText value="#{answer.id}"/>
                 </p:column>
-                <p:column headerText="Answer" filterBy="#{answer.content}">
+                <p:column headerText="Answer" filterBy="#{answer.content}" sortBy="#{answer.content}">
                     <h:outputText value="#{answer.content}"/>
                 </p:column>
-                <p:column headerText="Submission Date" filterBy="#{answer.lastModificationDate}">
+                <p:column headerText="Submission Date" filterBy="#{answer.lastModificationDate}" sortBy="#{answer.lastModificationDate}">
                     <h:outputText value="#{answer.lastModificationDate}"/>
                 </p:column>
-                <p:column headerText="Score" filterBy="#{answer.percent}">
+                <p:column headerText="Score" filterBy="#{answer.percent}" sortBy="#{answer.percent}">
                     <h:outputText value="#{answer.percent}"/>
                 </p:column>
-                <p:column headerText="Exercise Title" filterBy="#{answer.exercise}">
+                <p:column headerText="Exercise Title" filterBy="#{answer.exercise}" sortBy="#{answer.exercise}">
                     <h:outputText value="#{answer.exercise.title}"/>
                 </p:column>
-                <p:column headerText="User" filterBy="#{answer.user}">
+                <p:column headerText="User" filterBy="#{answer.user}" sortBy="#{answer.user}">
                     <h:outputText value="#{answer.user.login}"/>
                 </p:column>
                 <p:column>
