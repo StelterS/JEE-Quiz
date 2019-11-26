@@ -26,7 +26,9 @@ public class ExerciseService {
 
 	@CheckExerciseUser
 	public List<Exercise> findAllExercises() {
-		return em.createNamedQuery(Exercise.Queries.FIND_ALL, Exercise.class).getResultList();
+		return em.createNamedQuery(Exercise.Queries.FIND_ALL, Exercise.class)
+				.setHint("javax.persistence.loadgraph", em.getEntityGraph(Exercise.Graphs.WITH_ANSWER))
+				.getResultList();
 	}
 
 	@CheckExerciseUser
@@ -34,12 +36,15 @@ public class ExerciseService {
 		return em.createNamedQuery(Exercise.Queries.FIND_ALL, Exercise.class)
 				.setFirstResult(offset)
 				.setMaxResults(limit)
+				.setHint("javax.persistence.loadgraph", em.getEntityGraph(Exercise.Graphs.WITH_ANSWER))
 				.getResultList();
 	}
 
 	@CheckExerciseUser
 	public long countExercises() {
-		return em.createNamedQuery(Exercise.Queries.COUNT, Long.class).getSingleResult();
+		return em.createNamedQuery(Exercise.Queries.COUNT, Long.class)
+				.setHint("javax.persistence.loadgraph", em.getEntityGraph(Exercise.Graphs.WITH_ANSWER))
+				.getSingleResult();
 	}
 
 	@CheckExerciseUser
@@ -51,6 +56,7 @@ public class ExerciseService {
 	public List<Exercise> findExerciseByDifficulty(List<Difficulty> difficulties) {
 		return em.createNamedQuery(Exercise.Queries.FIND_BY_DIFFICULTY, Exercise.class)
 				.setParameter("difficulties", difficulties)
+				.setHint("javax.persistence.loadgraph", em.getEntityGraph(Exercise.Graphs.WITH_ANSWER))
 				.getResultList();
 	}
 

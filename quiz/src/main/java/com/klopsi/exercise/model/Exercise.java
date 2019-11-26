@@ -25,7 +25,13 @@ import java.util.Map;
 @NamedQuery(name = Exercise.Queries.COUNT, query = "select count(e) from Exercise e")
 @NamedQuery(name = Exercise.Queries.FIND_BY_DIFFICULTY, query = "select e from Exercise e where e.difficulty in :difficulties")
 @NamedQuery(name = Exercise.Queries.FIND_BY_ID, query = "select e from Exercise e where e.id in :id")
+@NamedEntityGraph(name = Exercise.Graphs.WITH_ANSWER,
+		attributeNodes = {@NamedAttributeNode("answers")})
 public class Exercise implements Serializable {
+
+	public static class Graphs {
+		public static final String WITH_ANSWER = "Exercise(Answer)";
+	}
 
 	public static class Queries {
 		public static final String FIND_ALL = "Exercise.findAll";
@@ -63,7 +69,7 @@ public class Exercise implements Serializable {
 	private Integer maxPoints;
 
 	@JsonbTransient
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "exercise", cascade = CascadeType.REMOVE)	// answers are deleted with exercise
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "exercise", cascade = CascadeType.REMOVE)	// answers are deleted with exercise
 	@Getter
 	@Setter
 	private List<Answer> answers = new ArrayList<>();
