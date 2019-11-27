@@ -26,6 +26,8 @@ import java.util.Map;
 @NamedQuery(name = Answer.Queries.FIND_BY_USER, query = "select a from Answer a where a.user.login = :login")
 @NamedQuery(name = Answer.Queries.FIND_BY_ID, query = "select a from Answer a where a.id = :id")
 @NamedQuery(name = Answer.Queries.FIND_BY_MODIFICATION_DATE, query = "select a from Answer a order by a.lastModificationDate desc")
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Answer implements Serializable {
 
 	public static class Queries {

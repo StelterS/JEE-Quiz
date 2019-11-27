@@ -8,6 +8,10 @@
     <ui:define name="content">
         <h:form>
             <h:commandButton value="Run tests" action="#{answerTests.runTests}"/>
+            <h:outputText id="outcome" value="#{answerTests.outcome}"/>
+            <f:websocket channel="push" scope="application">
+                <f:ajax event="updateOutcome" render=":outcome" />
+            </f:websocket>
         </h:form>
     </ui:define>
 
