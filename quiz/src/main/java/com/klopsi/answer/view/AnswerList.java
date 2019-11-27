@@ -7,13 +7,15 @@ import lombok.Getter;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.util.List;
 
 @Named
-@RequestScoped
-public class AnswerList {
+@ViewScoped
+public class AnswerList implements Serializable {
 	private AnswerService service;
 	private UserService userService;
 	private List<Answer> answers;
